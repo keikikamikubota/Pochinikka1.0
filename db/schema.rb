@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_02_032635) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_033719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_032635) do
     t.text "admin_note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "option1"
+    t.string "option2"
+    t.string "option3"
+    t.string "option4"
+    t.string "option5"
+    t.string "option6"
+    t.string "option7"
+    t.string "option8"
+    t.string "option9"
+    t.string "option10"
   end
 
 end
