@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ImportSettingsControllerTest < ActionDispatch::IntegrationTest
+class ImportDetailsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

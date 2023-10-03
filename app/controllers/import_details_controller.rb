@@ -1,4 +1,4 @@
-class ImportSettingsController < ApplicationController
+class ImportDetailsController < ApplicationController
   # ※スプレッドシートとの紐付けは事前に完了していることとする
 
   # インポート設定の処理。各レコードにカラム番号とインポート設定番号を入力し、form_withで送信
@@ -33,11 +33,11 @@ class ImportSettingsController < ApplicationController
 
     user = find_by(email: user.email) || new
     row = カラム名["name", "email", "phone", "status",...]
-  # カラム指定して
+    # カラム指定して
     更新データ（もしくは新規登録データ）を上の配列をキーにして値として呼び、userに代入
-     user.attributes = row.to_hash.slice(*updatable_attributes)
-      # 保存する
-      user.save　※updateだとnewに使えない
+    user.attributes = row.to_hash.slice(*updatable_attributes)
+    # 保存する
+    user.save　※updateだとnewに使えない
     end
   end
 
