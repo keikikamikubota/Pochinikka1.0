@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_073624) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_091328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "import_settings", force: :cascade do |t|
-    t.integer "sheet_column_number", null: false
-    t.integer "selected_title", null: false
+  create_table "import_details", force: :cascade do |t|
+    t.integer "sheet_column_number"
+    t.integer "selected_title"
+    t.bigint "sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sheet_id"], name: "index_import_details_on_sheet_id"
+  end
+
+  create_table "sheets", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -50,5 +59,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_073624) do
     t.index ["status_id"], name: "index_users_on_status_id"
   end
 
+  add_foreign_key "import_details", "sheets"
   add_foreign_key "users", "statuses"
 end

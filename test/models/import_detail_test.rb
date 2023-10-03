@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ImportSettingTest < ActiveSupport::TestCase
+class ImportDetailTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

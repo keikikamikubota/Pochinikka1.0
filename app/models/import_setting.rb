@@ -1,2 +1,0 @@
-class ImportSetting < ApplicationRecord
-end
