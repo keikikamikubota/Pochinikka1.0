@@ -23,6 +23,10 @@
     <%= f.text_field :phone %>
   </div>
   <div class="field">
+    <%= f.label :ステータス %>
+    <%= f.collection_select(:status_id, Status.all, :id, :name, prompt: '選択してください') %>
+  </div>
+  <div class="field">
     <%= f.label :備考 %>
     <%= f.text_field :note %>
   </div>

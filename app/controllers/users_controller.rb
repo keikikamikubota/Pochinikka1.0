@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @statuses = Status.all
   end
 
   def edit
@@ -42,6 +43,6 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(%i[name email phone  note admin_note user.status] )
+    params.require(:user).permit(%i[name email phone  note admin_note status_id] )
   end
 end
