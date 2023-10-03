@@ -1,2 +1,13 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>顧客詳細情報</h1>
+
+<p>名前: <%= @user.name %></p>
+
+<p>メールアドレス: <%= @user.email %></p>
+
+<p>TEL: <%= @user.phone %></p>
+<p>ステータス: <%= @user.status_id %></p>
+<p>備考: <%= @user.note %></p>
+<p>管理者メモ: <%= @user.admin_note %></p>
+
+<%= link_to '編集する', edit_user_path(@user.id) %>
+<%= link_to 'Index', users_path  %>
