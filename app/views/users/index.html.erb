@@ -1,5 +1,6 @@
 <h1>顧客マスタ一覧</h1>
 
+<%= link_to 'インポート設定', new_import_detail_path  %>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -29,3 +30,6 @@
     </tr>
   <% end %>
   </table>
+
+<%= link_to '新規顧客作成', new_user_path  %>
+

@@ -16,3 +16,8 @@ user = User.create!(
   phone: "090-0000-0000",
   status: Status.first
 )
+
+sheet = Sheet.create!(
+  title: "サンプルシート",
+  code: "1469246740"
+)
