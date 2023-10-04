@@ -1,3 +1,5 @@
+<h1>インポート設定</h1>
+
 <%= form_with(model: @import_detail, local: true) do |f| %>
   <% if @import_detail.errors.any? %>
     <div id="error_explanation">
@@ -10,20 +12,25 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :"カラム番号" %><br>
-    <%= f.number_field :sheet_column_number %>
-  </div>
+<!--  最初はシートのカラム名と番号を事前にコントローラ内で用意して表示させる-->
+  <% @sample_columns.each_with_index do |(column_name, column_number), i| %>
+    <%= f.fields_for "details[#{i}]", ImportDetail.new do |detail_fields| %>
+      <div class="field">
+        <%= f.hidden_field :sheet_column_number, value: column_number %>
+        <%= f.label :"カラム番号" %><br>
+        <%= column_number %>
+      </div>
 
-  <div class="field" >
-    <%= f.label :"インポート設定" %><br>
-    <%= f.select :selected_title %>
-  </div>
-
-  <div class="field">
-    <%= f.label :"シート番号" %><br>
-    <%= f.number_field :sheet_id %>
-  </div>
+      <div class="field" >
+        <%= f.label :"インポート設定" %><br>
+        <%= f.select :selected_title, ImportDetail.selected_titles.keys.map(&:to_sym), { include_blank: '選択してください' } %>
+      </div>
+      <div class="field">
+        <%= f.label :"シート番号" %><br>
+        <%= f.text_field :sheet_id %>
+      </div>
+    <% end %>
+  <% end %>
 
   <%= f.submit "インポート参照画面へ" %>
 <% end %>

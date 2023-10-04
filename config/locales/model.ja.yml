@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    models:
+      import_detail: インポート詳細
+    attributes:
+      import_detail:
+        sheet_column_number: カラム番号
+        selected_title: インポート設定
+        sheet_id: シートID

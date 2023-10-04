@@ -1,13 +1,13 @@
 class ImportDetail < ApplicationRecord
   belongs_to :sheet
 
-  enum selected_title:{ 名前: 0,
-                        メールアドレス: 1,
-                        電話番号: 2,
-                        ステータス:3,
-                        備考: 4,
-                        管理者メモ: 5,
-                        シート番号: 6,
+  enum selected_title:{ customer_name: 0,
+                        email: 1,
+                        phone: 2,
+                        status_id: 3,
+                        note: 4,
+                        admin_note: 5,
+                        sheet_code: 6,
                         option1: 7,
                         option2: 8,
                         option3: 9,
