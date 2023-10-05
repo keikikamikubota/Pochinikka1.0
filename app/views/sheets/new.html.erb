@@ -1,0 +1,41 @@
+<h1>インポート設定</h1>
+
+<%= form_with(model: @sheet, local: true) do |f| %>
+
+  <% if @sheet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @sheet.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @sheet.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!--  最初はシートのカラム名と番号を事前にコントローラ内で用意して表示させる-->
+  <%# @sample_columns.each_with_index do |(column_name, column_number), i| %>
+    <%#= f.fields_for :import_details, @sheet.import_details.build(sheet_column_number: column_number), index: i do |detail_fields| %>
+    <%= f.fields_for :import_details do |detail_fields| %>
+
+      <div class="field">
+        <%= detail_fields.hidden_field :sheet_column_number %>
+        <%= detail_fields.label :"カラム番号" %><br>
+        <%= detail_fields.object.sheet_column_number %>
+      </div>
+
+      <div class="field" >
+        <%= detail_fields.label :"インポート設定" %><br>
+        <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] },
+                                 { include_blank: '選択してください' } %>
+
+      </div>
+      <div class="field">
+        <%= detail_fields.label :"sheet_id" %><br>
+        <%= detail_fields.text_field :sheet_id %>
+      </div>
+    <% end %>
+  <%# end %>
+
+  <%= f.submit "インポート参照画面へ" %>
+<% end %>

@@ -1,24 +1,18 @@
-<h1>インポート参照画面</h1>
-<!--<p>-->
-<!--  <strong>カラム番号:</strong> <%#= @import_detail.sheet_column_number %>-->
-<!--</p>-->
-<!--<p>-->
-<!--  <strong>ラベル:</strong>-->
-  <%# @import_detail.labels.each do |n| %>
-    <%#= n.title %>
-  <%# end %>
-<!--</p>-->
-<!--<p>-->
-<!--  <strong>詳しい内容:</strong> <%#= @import_detail.content %>-->
-<!--</p>-->
-<!--<p>-->
-<!--  <strong>作成日時:</strong> <%#= l @import_detail.created_at %>-->
-<!--<p>-->
-<!--<p>-->
-<!--  <strong>優先順位:</strong> <%#= l @import_detail.expired_at, format: :short %>-->
-<!--<p>-->
-<!--  <strong>ステータス:</strong> <%#= @import_detail.status %>-->
-<!--</p>-->
-<!--<p>-->
-<!--  <strong>優先度:</strong> <%#= @import_detail.priority %>-->
-<!--</p>-->
+<h1>シート詳細画面</h1>
+
+<strong>Sheet Column Number:</strong>
+<%= @import_detail.sheet_column_number %>
+</p>
+
+<p>
+  <strong>Selected Title:</strong>
+  <%= @import_detail.selected_title %>
+</p>
+
+<p>
+  <strong>Sheet ID:</strong>
+  <%= @import_detail.sheet_id %>
+</p>
+
+<%= link_to 'Edit', edit_import_detail_path(@import_detail) %> |
+<%= link_to 'Back', users_path %>

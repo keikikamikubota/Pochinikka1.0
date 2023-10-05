@@ -5,5 +5,12 @@ ja:
     attributes:
       import_detail:
         sheet_column_number: カラム番号
-        selected_title: インポート設定
+        selected_title:
+          customer_name: 名前
+          email: メールアドレス
+          phone: 電話番号
+          status: ステータス
+          note: 備考
+          admin_note: 管理者メモ
+          sheet_code: シート番号
         sheet_id: シートID

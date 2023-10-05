@@ -1,0 +1,28 @@
+<h1>インポート参照</h1>
+
+<p>
+  <strong>シート名:</strong> <%= @sheet.title %>
+</p>
+<p>
+  <strong>シート番号:</strong> <%= @sheet.code %>
+</p>
+<hr>
+
+<% @sheet.import_details.each do |import_detail|%>
+  <ul>
+    <li>
+      <strong>カラム番号</strong> <%= import_detail.sheet_column_number %>
+    </li>
+    <li>
+      <strong>インポート設定</strong> <%= import_detail.selected_title %>
+    </li>
+    <li>
+      <strong>sheet_id</strong> <%= import_detail.sheet_id %>
+    </li>
+  </ul>
+<% end %>
+
+<br>
+
+
+<%= link_to "戻る", users_path %>
