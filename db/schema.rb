@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_091328) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_095102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_091328) do
     t.string "option9"
     t.string "option10"
     t.integer "sheet_code"
-    t.bigint "status_id", null: false
+    t.bigint "status_id", default: 1, null: false
     t.index ["status_id"], name: "index_users_on_status_id"
   end
 

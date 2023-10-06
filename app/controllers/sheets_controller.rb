@@ -5,7 +5,7 @@ class SheetsController < ApplicationController
   def new
     @sheet = Sheet.new
   #  (まずは用意した以下の3行のカラムを取得。最終的にシートからこの情報は取得するようにする)
-    sample_columns  = {"名前": 1, "email": 2, "phone": 3}
+    sample_columns  = {"名前": 1, "email": 2, "phone": 3, "status_id": 4}
     sample_columns.each do |name, number|
       @sheet.import_details.build(sheet_column_number: number)
       end
@@ -24,6 +24,14 @@ class SheetsController < ApplicationController
     end
   end
 
+  def import_exec
+    @sheet = Sheet.find(params[:id])
+    ImportUsersService.new(@sheet).call
+    # フラッシュメッセージを設定
+    flash[:notice] = 'Data has been imported successfully!'
+    # showアクションにリダイレクト
+    redirect_to users_path(params[:id])
+  end
   # 後回し。最初は全件取得。
   # def スプレッドシートの範囲を絞るメソッド
   # ここでシートの名前とカラム番号とsheet_idを取得して、インポート設定時に

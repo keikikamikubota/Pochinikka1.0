@@ -1,7 +1,7 @@
 class ImportDetail < ApplicationRecord
   belongs_to :sheet
 
-  enum selected_title:{ customer_name: 0,
+  enum selected_title:{ name: 0,
                         email: 1,
                         phone: 2,
                         status_id: 3,
@@ -18,5 +18,5 @@ class ImportDetail < ApplicationRecord
                         option8: 14,
                         option9: 15,
                         option10: 16
-  }
+  }, _prefix: true
 end

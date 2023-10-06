@@ -26,3 +26,5 @@
 
 
 <%= link_to "戻る", users_path %>
+
+<%= button_to 'Import Users', import_exec_sheet_path(@sheet), method: :post, data: { confirm: 'Are you sure you want to import data?' } %>

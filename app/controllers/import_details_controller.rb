@@ -62,11 +62,11 @@ class ImportDetailsController < ApplicationController
   #   end
   # end
 
-  def destroy
-    @import_detail = ImportDetail.find(params[:id])
-    @import_detail.destroy
-    redirect_to users_path, flash: {success: "タスクが削除されました"}
-  end
+  # def destroy
+  #   @import_detail = ImportDetail.find(params[:id])
+  #   @import_detail.destroy
+  #   redirect_to users_path, flash: {success: "タスクが削除されました"}
+  # end
   # def import_start
 
 
@@ -83,10 +83,5 @@ class ImportDetailsController < ApplicationController
   private
   # def import_detail_params
   #   params.require(:import_detail).permit(import_details: [:sheet_column_number, :selected_title, :sheet_id])
-  # end
-  #
-  # def set_sample_sheet
-  #   # ハッシュが3つあるのでeach doは3回繰り返されられる
-  # @sample_columns  = {"名前": 1, "email": 2, "phone": 3}
   # end
 end
