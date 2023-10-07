@@ -6,14 +6,7 @@ class ImportUsersService
     @spreadsheets = Google::Spreadsheets.new
     # 作成済みのインポート設定情報を呼び出す
     @sheet = sheet
-    @import_details = @sheet.import_details.order(:sheet_column_number)
   end
-
-  # def インポート設定の紐付けを反映させるメソッド
-  # スプレッドシートの顧客情報1行が配列で送られてくる。
-  #     sheet_column_number(-1)の値をインデックス番号として、配列内の要素に振り分ける。
-  #     @import_details内 に保存されているselected_titleの数値として、スプレッドシートの読み込みをする
-  # end
 
   # シートのIDと範囲を指定し、そのデータを抽出する。それをもとにインポート実行する
   def call
@@ -23,31 +16,30 @@ class ImportUsersService
 
   private
 
-
-  # 上記の抽出されたデータをUserインスタンスに送って、一人ずつ発行していく
-  def map_row_to_attributes(row)
-    attributes = {}
-    @import_details.each do |detail|
-      attributes[detail.selected_title.to_sym] = row[detail.sheet_column_number - 1]
-    end
-    attributes
-  end
-
   def import_users(values)
     values.each do |row|
-      user_attributes = map_row_to_attributes(row)
-      # ここで得られたuser_attributesをもとにユーザーを作成
-      User.create!(user_attributes)
-    rescue ActiveRecord::RecordInvalid => e
-      Rails.logger.error "Failed to import user: #{e.message}"
-      raise ActiveRecord::Rollback
+      import_user(row)
     end
   end
 
-
-
-
+  def import_user(row)
+    user_params = switch_columns(row)
+    # binding.pry
+    User.create!(user_params)
+  end
+  
+  def switch_columns(row)
+      # ここで row[2] と row[3]（C列とD列）のデータをスイッチ
+      # 新しいデータの順番に従った配列を作成
+      reordered_row = [row[0], row[1], row[3], row[2]]
+      # オプション: このデータをHashに変換してキーを利用したい場合
+      keys = [:name, :email, :phone, :status_id]
+      Hash[keys.zip(reordered_row)]
+  end
 end
+
+
+
 
 # ---とりあえずインポート自体はうまくいったコード
   # 上記のUser発行時に、インポート設定をsheet_column_number順に並べてハッシュに格納する
