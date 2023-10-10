@@ -4,11 +4,12 @@ class SheetsController < ApplicationController
 
   def new
     @sheet = Sheet.new
-  #  (まずは用意した以下の3行のカラムを取得。最終的にシートからこの情報は取得するようにする)
-    sample_columns  = {"名前": 1, "email": 2, "phone": 3, "status_id": 4}
-    sample_columns.each do |name, number|
-      @sheet.import_details.build(sheet_column_number: number)
-      end
+
+    import_service = ImportUsersService.new(@sheet)
+    # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
+    @sheet_values.destroy_all if @sheet_values.present?
+    @sheet_values = import_service.sheet_values
+    @sheet_values.first.size.times { @sheet.import_details.build } if @sheet_values.present?
   end
 
   def create
@@ -32,11 +33,6 @@ class SheetsController < ApplicationController
     # showアクションにリダイレクト
     redirect_to users_path(params[:id])
   end
-  # 後回し。最初は全件取得。
-  # def スプレッドシートの範囲を絞るメソッド
-  # ここでシートの名前とカラム番号とsheet_idを取得して、インポート設定時に
-  # 非同期でさせられればベスト
-  # end
 
   # showアクションをインポート参照アクションとして利用
   def show

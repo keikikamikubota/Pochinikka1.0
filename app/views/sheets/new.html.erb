@@ -13,15 +13,20 @@
     </div>
   <% end %>
 
-  <!--  最初はシートのカラム名と番号を事前にコントローラ内で用意して表示させる-->
-  <%# @sample_columns.each_with_index do |(column_name, column_number), i| %>
-    <%#= f.fields_for :import_details, @sheet.import_details.build(sheet_column_number: column_number), index: i do |detail_fields| %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.collection_select :sheet_id, Sheet.all, :id, :title %>
+  </div>
+
+  <hr>
+<!--ネストされたインポート設定-->
     <%= f.fields_for :import_details do |detail_fields| %>
 
       <div class="field">
-        <%= detail_fields.hidden_field :sheet_column_number %>
+        <%#= detail_fields.hidden_field :sheet_column_number, value: detail_fields.index + 1 %>
         <%= detail_fields.label :"カラム番号" %><br>
-        <%= detail_fields.object.sheet_column_number %>
+        <%= detail_fields.select :sheet_column_number,(1..20).to_a, required: true %>
+        <%#= detail_fields.index + 1 %>
       </div>
 
       <div class="field" >
@@ -30,12 +35,9 @@
                                  { include_blank: '選択してください' } %>
 
       </div>
-      <div class="field">
-        <%= detail_fields.label :"sheet_id" %><br>
-        <%= detail_fields.text_field :sheet_id %>
-      </div>
+
+    <br>
     <% end %>
-  <%# end %>
 
   <%= f.submit "インポート参照画面へ" %>
 <% end %>
