@@ -1,7 +1,4 @@
-require "google/apis/sheets_v4"
-require 'googleauth'
-require 'googleauth/stores/file_token_store'
-require 'fileutils'
+require 'google_drive'
 
 class ExportUsersService
   SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
@@ -13,20 +10,33 @@ class ExportUsersService
     @range = range
   end
 
+  def session
+  @session = GoogleDrive::Session.from_config('config.json')
+  end
+
+  def sheet
+    @sheet ||= session.spreadsheet_by_key(@spreadsheet_id).worksheet_by_title("テスト用シート")
+  end
+
   def call
-    # User モデルからエクスポートしたいデータを取得
-    users_data = User.all.map do |user|
-      [user.id, user.name, user.email, user.phone,
-      user.status_id]
+    User.all.each_with_index do |user, index|
+      # index + 1 because spreadsheet rows start at 1
+      sheet[index + 2, 1] = user.name
+      sheet[index + 2, 2] = user.email
+      sheet[index + 2, 3] = user.phone
+      sheet[index + 2, 4] = user.status_id
+      sheet[index + 2, 5] = user.note
     end
+    sheet.save
+  end
+end
+
+    # スプレッドシートへの書き込み
+
+    # シートの保存
 
   # # config.jsonを読み込んでセッションを確立
   # session = GoogleDrive::Session.from_config("app/services/config.json")
 
-    # Google::Spreadsheets インスタンスを作成
-    google_spreadsheets = Google::Spreadsheets.new
 
     # スプレッドシートにデータを書き込む
-    google_spreadsheets.append_values(@spreadsheet_id, @range, users_data)
-  end
-end

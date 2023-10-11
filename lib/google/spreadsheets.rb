@@ -1,4 +1,5 @@
-require "google/apis/sheets_v4"
+# require "google/apis/sheets_v4"
+require 'google_drive'
 
 class Google::Spreadsheets
   def initialize
@@ -9,16 +10,14 @@ class Google::Spreadsheets
   # 認証
   def authorize
     # エクスポート用のJSONファイル飲み込み
-    config = JSON.parse(File.read('app/services/config.json'))
+    # config = JSON.parse(File.read('app/services/config.json'))
 
     # インポート時の秘密鍵
     json_key = JSON.generate(
       private_key: ENV['PRIVATE_KEY'].gsub('\n', "\n"),
       client_email: ENV['CLIENT_EMAIL']
     )
-
     json_key_io = StringIO.new(json_key)
-
     authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
       json_key_io: json_key_io,
       scope: ["https://www.googleapis.com/auth/spreadsheets"]
@@ -31,11 +30,4 @@ class Google::Spreadsheets
   def get_values(spreadsheet_id, range)
     @service.get_spreadsheet_values(spreadsheet_id, range)
   end
-
-  # 値を追加するメソッド
-  def append_values(spreadsheet_id, range, values, value_input_option: 'RAW')
-    value_range = Google::Apis::SheetsV4::ValueRange.new(values: values)
-    @service.append_spreadsheet_value(spreadsheet_id, range, value_range, value_input_option: value_input_option)
-  end
-  
 end

@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # エクスポートを実行するメソッド
   def export_to_google_sheets
     #エクスポート実行のコードを呼び出す
-    ExportUsersService.new(spreadsheet_id, range).call
+    ExportUsersService.new.call
     redirect_to users_path, notice: 'Users exported to Google Sheets successfully.'
   end
 
@@ -49,6 +49,6 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(%i[name email phone  note admin_note status_id option1 option2] )
+    params.require(:user).permit(%i[name email phone note admin_note status_id option1 option2 ])
   end
 end

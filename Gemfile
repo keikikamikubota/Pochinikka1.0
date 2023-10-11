@@ -15,10 +15,10 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 # ここから追加
 gem 'enum_help'
-gem 'google-api-client'
+# gem 'google-api-client'
 gem 'dotenv-rails'
 gem 'googleauth'
-# gem 'google_drive'
+gem 'google_drive'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

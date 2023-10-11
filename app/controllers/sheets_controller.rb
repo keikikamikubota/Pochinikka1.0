@@ -1,7 +1,6 @@
 class SheetsController < ApplicationController
   def new
     @sheet = Sheet.new
-
     import_service = ImportUsersService.new(@sheet)
     # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
     @sheet_values.destroy_all if @sheet_values.present?
