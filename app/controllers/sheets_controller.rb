@@ -1,7 +1,4 @@
 class SheetsController < ApplicationController
-  
-  # インポート設定の処理。各レコードにカラム番号とインポート設定番号を入力し、form_withで送信
-
   def new
     @sheet = Sheet.new
 
@@ -24,7 +21,8 @@ class SheetsController < ApplicationController
       render :new
     end
   end
-
+  
+  #  インポートの実行をするメソッド。
   def import_exec
     @sheet = Sheet.find(params[:id])
     ImportUsersService.new(@sheet).call
@@ -33,6 +31,8 @@ class SheetsController < ApplicationController
     # showアクションにリダイレクト
     redirect_to users_path(params[:id])
   end
+
+
 
   # showアクションをインポート参照アクションとして利用
   def show

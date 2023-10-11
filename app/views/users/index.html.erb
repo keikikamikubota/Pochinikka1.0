@@ -32,4 +32,5 @@
   </table>
 
 <%= link_to '新規顧客作成', new_user_path  %>
+<%= button_to 'エクスポートを実行する', export_to_google_sheets_users_path, method: :post, data: { confirm: "本当にエクスポートしますか？" }  %>
 

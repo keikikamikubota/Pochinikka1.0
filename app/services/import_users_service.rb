@@ -24,16 +24,12 @@ class ImportUsersService
 def import_users(values)
   values.each do |row|
     attr = {}
-
     # @sheet.import_details は {selected_title: :name, sheet_column_number: 1} のようなハッシュを含むと仮定
     @sheet.import_details.each do |detail|
       next unless detail.selected_title
-
       # selected_title は enum なので、これがキーとなる。
       attr[detail.selected_title.to_sym] = row[detail.sheet_column_number - 1]
-
     end
-
     # attr は {:name=>"a", :email=>"test1@.com", :status_id=>"1", :phone=>"09000-00000"} のようになります。
     User.create!(attr)
    end

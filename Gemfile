@@ -18,6 +18,7 @@ gem 'enum_help'
 gem 'google-api-client'
 gem 'dotenv-rails'
 gem 'googleauth'
+# gem 'google_drive'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

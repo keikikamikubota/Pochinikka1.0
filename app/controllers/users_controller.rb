@@ -3,6 +3,13 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  # エクスポートを実行するメソッド
+  def export_to_google_sheets
+    #エクスポート実行のコードを呼び出す
+    ExportUsersService.new(spreadsheet_id, range).call
+    redirect_to users_path, notice: 'Users exported to Google Sheets successfully.'
+  end
+
   def show
     @user = User.find(params[:id])
   end
