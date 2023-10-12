@@ -32,3 +32,5 @@
 
 .env
 config.json
+
+db/seeds.rb
