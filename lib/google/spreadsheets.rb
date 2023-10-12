@@ -1,6 +1,5 @@
-# require "google/apis/sheets_v4"
 require 'google_drive'
-
+#spreadsheetsクラスを作成し、内部でAPIとの認証を突破する。シートのセル範囲を指定する
 class Google::Spreadsheets
   def initialize
     @service = Google::Apis::SheetsV4::SheetsService.new
@@ -9,9 +8,6 @@ class Google::Spreadsheets
 
   # 認証
   def authorize
-    # エクスポート用のJSONファイル飲み込み
-    # config = JSON.parse(File.read('app/services/config.json'))
-
     # インポート時の秘密鍵
     json_key = JSON.generate(
       private_key: ENV['PRIVATE_KEY'].gsub('\n', "\n"),

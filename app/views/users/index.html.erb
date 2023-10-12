@@ -27,7 +27,6 @@
     <th>備考</th>
     <th>管理者メモ</th>
     <th><%= sort_link(@q, :created_at, '作成日') %> |</th>
-    <th>更新日</th>
     <th>option1</th>
     <th>option2</th>
     <th>option3</th>
@@ -44,6 +43,9 @@
       <td><%= user.note %></td>
       <td><%= user.admin_note %></td>
       <td><%= user.created_at.strftime("%Y-%m-%d") %></td>
+      <td><%= user.option1 %></td>
+      <td><%= user.option2 %></td>
+      <td><%= user.option3 %></td>
       <td><%= link_to "詳細", user %></td>
       <td><%= link_to "編集", edit_user_path(user) %></td>
       <td><%= button_to "削除", user, method: :delete,

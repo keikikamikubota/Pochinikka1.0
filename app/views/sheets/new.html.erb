@@ -1,5 +1,27 @@
 <h1>インポート設定</h1>
 
+<h3>インポート設定には</h3>
+<h3>カラム番号にはシート元のカラム番号を入れてください</h3>
+
+<button id="fetch-data-btn">データを取得</button>
+<div id="data-display-area"></div>
+
+<script>
+    $(document).ready(function() {
+        $("#fetch-data-btn").on("click", function() {
+            $.get("/sheets/fetch_spreadsheet_data", function(data) {
+                let displayArea = $("#data-display-area");
+                displayArea.empty(); // Clear the display area
+
+                data.data.forEach(function(row) {
+                    let para = $("<p>").text(row.join("| "));
+                    displayArea.append(para);
+                });
+            });
+        });
+    });
+</script>
+
 <%= form_with(model: @sheet, local: true) do |f| %>
 
   <% if @sheet.errors.any? %>
@@ -21,7 +43,6 @@
   <hr>
 <!--ネストされたインポート設定-->
     <%= f.fields_for :import_details do |detail_fields| %>
-
       <div class="field">
         <%#= detail_fields.hidden_field :sheet_column_number, value: detail_fields.index + 1 %>
         <%= detail_fields.label :"カラム番号" %><br>
@@ -39,5 +60,7 @@
     <br>
     <% end %>
 
-  <%= f.submit "インポート参照画面へ" %>
+  <%= f.submit "設定を登録" %>
 <% end %>
+
+<%= link_to "戻る", users_path %>

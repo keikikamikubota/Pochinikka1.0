@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     member do
       post :import_exec
     end
+    collection do
+      get :fetch_spreadsheet_data
+    end
   end
   resources :import_details
 end

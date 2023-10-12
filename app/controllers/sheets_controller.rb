@@ -21,18 +21,7 @@ class SheetsController < ApplicationController
     end
   end
   
-  #  インポートの実行をするメソッド。
-  def import_exec
-    @sheet = Sheet.find(params[:id])
-    ImportUsersService.new(@sheet).call
-    # フラッシュメッセージを設定
-    flash[:notice] = 'Data has been imported successfully!'
-    # showアクションにリダイレクト
-    redirect_to users_path(params[:id])
-  end
-
-
-
+  
   # showアクションをインポート参照アクションとして利用
   def show
     @sheet = Sheet.find(params[:id])
@@ -57,11 +46,29 @@ class SheetsController < ApplicationController
     redirect_to users_path, flash: {success: "タスクが削除されました"}
   end
 
+  #  インポートの実行をするメソッド。
+  def import_exec
+    @sheet = Sheet.find(params[:id])
+    ImportUsersService.new(@sheet).call
+    # フラッシュメッセージを設定
+    flash[:notice] = 'インポートが完了しました!'
+    # showアクションにリダイレクト
+    redirect_to users_path(params[:id])
+  end
+
+  def fetch_spreadsheet_data
+    fetch_column_service = FetchColumnService.new(Sheet.new)
+    google_response = fetch_column_service.fetch_values
+    @data = google_response.values
+    binding.pry
+    render json: { data: @data }
+  end
+  
   private
+
   def sheet_params
     params.require(:sheet).permit(:title, :code,
                                   import_details_attributes: [:sheet_column_number, :selected_title, :sheet_id])
   end
-
 end
 
