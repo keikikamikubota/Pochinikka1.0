@@ -5,4 +5,6 @@
 
 <p>メールアドレス: <%= @admin.email %></p>
 
+<%= link_to '編集する', edit_admin_path(@admin.id) %>
+<%= link_to 'Index', users_path  %>
 

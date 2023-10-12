@@ -17,6 +17,10 @@ class AdminsController < ApplicationController
     end
   end
 
+  def edit
+    @admin = Admin.find(params[:id])
+  end
+
   def create
     @admin = Admin.new(admin_params)
     if @admin.save
