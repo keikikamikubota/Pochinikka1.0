@@ -17,6 +17,13 @@ user = User.create!(
   status: Status.first
 )
 
+admin = Admin.create!(
+  name: "テスト管理者",
+  email: "admin@test.com",
+  password: 'test11',
+  password_confirmation: 'test11'
+)
+
 sheet = Sheet.create!(
   title: "サンプルシート",
   code: "1469246740"
