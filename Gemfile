@@ -19,6 +19,7 @@ gem 'enum_help'
 gem 'dotenv-rails'
 gem 'googleauth'
 gem 'google_drive'
+gem 'ransack'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]

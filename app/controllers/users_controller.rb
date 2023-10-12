@@ -1,13 +1,8 @@
 class UsersController < ApplicationController
-  def index
-    @users = User.all
-  end
+  before_action :search, only: [:index]
 
-  # エクスポートを実行するメソッド
-  def export_to_google_sheets
-    #エクスポート実行のコードを呼び出す
-    ExportUsersService.new.call
-    redirect_to users_path, notice: 'Users exported to Google Sheets successfully.'
+  def index
+    @users = @q.result(distinct: true)
   end
 
   def show
@@ -47,8 +42,23 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  # エクスポートを実行するメソッド
+  def export_to_google_sheets
+    #エクスポート実行のコードを呼び出す
+    ExportUsersService.new.call
+    redirect_to users_path, notice: 'エクスポートが完了しました。'
+  end
+
   private
+
+  # ransack検索用メソッド
+  def search
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
+    @result = params[:q]&.values&.reject(&:blank?)
+  end
+
   def user_params
-    params.require(:user).permit(%i[name email phone note admin_note status_id option1 option2 ])
+    params.require(:user).permit(%i[name email phone note admin_note status_id option1 option2 option3])
   end
 end
