@@ -2,45 +2,55 @@
 
 <h3>カラム番号にはシート元のカラム番号を入れてください</h3>
 <br>
-<button id="fetch-data-btn">カラムを取得</button>
-<table id="data-display-table" class="table">
-  <thead>
-    <tr id="table-header"></tr>
-  </thead>
-  <tbody id="table-body"></tbody>
-</table>
+
+<button id="fetch-data-btn" class="btn btn-primary">カラムを取得</button>
+<div id="data-container" class="mt-4 border p-3">
+  <div class="row" id="counter-list">
+    <!-- カウンター（数字）はここに追加されます -->
+  </div>
+  <div class="row" id="data-list">
+    <!-- データはここに追加されます -->
+  </div>
+</div>
 
 <script>
     $(document).ready(function() {
         $("#fetch-data-btn").on("click", function() {
             $.get("/sheets/fetch_spreadsheet_data", function(data) {
-                let tableHeader = $("#table-header");
-                let tableBody = $("#table-body");
-                tableHeader.empty();
-                tableBody.empty();
-                data.data.forEach(function(row, index) {
-                    if (index === 0) {
-                        // Generate table headers
-                        row.forEach(function(cell) {
-                            let header = $("<th>").text(cell);
-                            tableHeader.append(header);
-                        });
-                    } else {
-                        // Generate table rows
-                        let tr = $("<tr>");
-                        row.forEach(function(cell) {
-                            let td = $("<td>").text(cell);
-                            tr.append(td);
-                        });
-                        tableBody.append(tr);
-                    }
+                let dataList = $("#data-list");
+                dataList.empty();
+                let counterList = $("#counter-list");
+                counterList.empty();
+
+                data.data.forEach(function(item, index) {
+                    let listItem = $("<div>").addClass("col p-2 border").text(item);
+                    dataList.append(listItem);
+
+                    // カウンターの追加
+                    let counterItem = $("<div>").addClass("col p-2 border text-center").text(index + 1);
+                    counterList.append(counterItem);
                 });
             });
         });
     });
 </script>
 
-<%= form_with(model: @sheet, local: true) do |f| %>
+<!--<script>-->
+<!--    $(document).ready(function() {-->
+<!--        $("#fetch-data-btn").on("click", function() {-->
+<!--            $.get("/sheets/fetch_spreadsheet_data", function(data) {-->
+<!--                let dataList = $("#data-list");-->
+<!--                dataList.empty();-->
+<!--                data.data.forEach(function(item) {-->
+<!--                    let listItem = $("<div>").addClass("col p-2 border").text(item);-->
+<!--                    dataList.append(listItem);-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+  <%= form_with(model: @sheet, local: true) do |f| %>
   <% if @sheet.errors.any? %>
     <div id="error_explanation">
       <h2><%= @sheet.errors.count %>件のエラーがあります。</h2>
@@ -58,7 +68,7 @@
   </div>
   <hr>
 
-ネストされたインポート設定
+<!--  ネストされたインポート設定-->
   <table class="table" >
     <thead>
       <tr>

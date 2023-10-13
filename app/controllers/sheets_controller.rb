@@ -8,7 +8,6 @@ class SheetsController < ApplicationController
     @sheet = Sheet.find_or_initialize_by(id: 1)
     # インポート設定が重複しないように過去分を削除
     @sheet.import_details.destroy_all
-    binding.pry
     #今回は既存のid:1のシートのみと仮定するのでcreateではなくupdateにしている
     if @sheet.update(sheet_params)
       redirect_to sheet_path(@sheet)
@@ -65,7 +64,7 @@ class SheetsController < ApplicationController
     @data.destroy_all if @data.present?
     fetch_column_service = FetchColumnService.new(@sheet)
     @data = fetch_column_service.fetch_values
-    @data.first.size.times { @sheet.import_details.build } if @data.present?
+    @data.size.times { @sheet.import_details.build } if @data.present?
   end
 
   def sheet_params
