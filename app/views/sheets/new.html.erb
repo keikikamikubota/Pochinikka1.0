@@ -45,7 +45,7 @@
         <div class="field">
           <%#= detail_fields.hidden_field :sheet_column_number, value: detail_fields.index + 1 %>
           <%= detail_fields.label :"カラム番号" %><br>
-          <%= detail_fields.select :sheet_column_number,(1..20).to_a, required: true %>
+          <%= detail_fields.select :sheet_column_number,(1..20).to_a, required: true, include_blank: true %>
         </div>
         <div class="field" >
           <%= detail_fields.label :"インポート設定" %><br>

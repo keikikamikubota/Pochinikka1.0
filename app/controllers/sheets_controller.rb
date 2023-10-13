@@ -1,11 +1,16 @@
 class SheetsController < ApplicationController
   def new
     @sheet = Sheet.new
-    import_service = ImportUsersService.new(@sheet)
+    # import_service = ImportUsersService.new(@sheet)
     # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
-    @sheet_values.destroy_all if @sheet_values.present?
-    @sheet_values = import_service.sheet_values
-    @sheet_values.first.size.times { @sheet.import_details.build } if @sheet_values.present?
+    # @sheet_values.destroy_all if @sheet_values.present?
+    # @sheet_values = import_service.sheet_values
+    # @sheet_values.first.size.times { @sheet.import_details.build } if @sheet_values.present?
+
+    @data.destroy_all if @data.present?
+    fetch_column_service = FetchColumnService.new(@sheet)
+    @data = fetch_column_service.fetch_values
+    @data.first.size.times { @sheet.import_details.build } if @data.present?
   end
 
   def create
@@ -20,8 +25,7 @@ class SheetsController < ApplicationController
       render :new
     end
   end
-  
-  
+
   # showアクションをインポート参照アクションとして利用
   def show
     @sheet = Sheet.find(params[:id])

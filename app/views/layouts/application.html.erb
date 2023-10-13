@@ -15,7 +15,7 @@
     <%= content_tag(:div, value, class: "#{key}") %>
   <% end %>
   <% if logged_in? %>
-    <%= link_to current_user.name, admin_path(current_user.id) %>
+    <%= link_to current_user.name, admin_path(current_user.id), class: "btn btn-outline-success" %>
     <%= button_to "Logout", session_path(current_user.id), method: :delete %>
   <% end %>
     <%= yield %>

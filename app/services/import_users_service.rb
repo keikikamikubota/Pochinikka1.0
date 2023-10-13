@@ -1,7 +1,7 @@
 class ImportUsersService
   # インポート元のシートのURLとシート名、セル範囲を指定
   SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
-  RANGE = 'テスト用シート!A4:I18'
+  RANGE = 'テスト用シート!A4:F7'
   # 非同期で表示させたいのはA2:I3
 
   def initialize(sheet, spreadsheet_id = SPREADSHEET_ID, range = RANGE)
@@ -33,8 +33,10 @@ class ImportUsersService
         next unless detail.selected_title
         # selected_title は enum なので、これがキーとなる。
         attr[detail.selected_title.to_sym] = row[detail.sheet_column_number - 1]
+        binding.pry
       end
-      user = User.find_by(email: row[1])
+      #attrに紐づいたインポート設定をもとにuserを作成していく
+      user = User.find_by(email: attr[:email])
       if  user
         user.update!(attr)
       else
