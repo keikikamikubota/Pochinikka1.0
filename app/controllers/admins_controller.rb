@@ -1,19 +1,15 @@
 class AdminsController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
   def new
-    if current_user.present?
-      flash[:alert] = "すでにユーザー登録済みです"
-      redirect_to tasks_path
-    else
-      @admin = Admin.new
-    end
+    @admin = Admin.new
   end
 
   def show
     @admin = Admin.find(params[:id])
+    binding.pry
     if @admin.id != current_user.id
       flash[:alert] =  "本人以外のユーザー閲覧はできません"
-      redirect_to tasks_path
+      redirect_to users_path
     end
   end
 

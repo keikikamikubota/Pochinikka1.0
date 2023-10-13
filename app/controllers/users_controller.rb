@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :search, only: [:index]
 
   def index
-    @users = @q.result(distinct: true)
+    @users = @q.result(distinct: true).page(params[:page])
   end
 
   def show
