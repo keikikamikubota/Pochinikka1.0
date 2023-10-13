@@ -1,24 +1,15 @@
 class SheetsController < ApplicationController
   def new
     @sheet = Sheet.new
-    # import_service = ImportUsersService.new(@sheet)
-    # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
-    # @sheet_values.destroy_all if @sheet_values.present?
-    # @sheet_values = import_service.sheet_values
-    # @sheet_values.first.size.times { @sheet.import_details.build } if @sheet_values.present?
-
-    @data.destroy_all if @data.present?
-    fetch_column_service = FetchColumnService.new(@sheet)
-    @data = fetch_column_service.fetch_values
-    @data.first.size.times { @sheet.import_details.build } if @data.present?
+    repeat_detail
   end
 
   def create
-    # ID 1のSheetを検索し、存在しない場合は新しく作成
     @sheet = Sheet.find_or_initialize_by(id: 1)
     # インポート設定が重複しないように過去分を削除
     @sheet.import_details.destroy_all
-    #今回は既存のid:1のシートと仮定するのでcreateではなくupdateにしている
+    binding.pry
+    #今回は既存のid:1のシートのみと仮定するのでcreateではなくupdateにしている
     if @sheet.update(sheet_params)
       redirect_to sheet_path(@sheet)
     else
@@ -66,12 +57,20 @@ class SheetsController < ApplicationController
     @data = google_response
     render json: { data: @data }
   end
-  
+
   private
+
+  def repeat_detail
+    # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
+    @data.destroy_all if @data.present?
+    fetch_column_service = FetchColumnService.new(@sheet)
+    @data = fetch_column_service.fetch_values
+    @data.first.size.times { @sheet.import_details.build } if @data.present?
+  end
 
   def sheet_params
     params.require(:sheet).permit(:title, :code,
-                                  import_details_attributes: [:sheet_column_number, :selected_title, :sheet_id])
+                                  import_details_attributes: [:id, :sheet_column_number, :selected_title, :sheet_id])
   end
 end
 

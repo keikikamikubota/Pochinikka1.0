@@ -1,20 +1,39 @@
 <h1>インポート設定</h1>
 
-<h3>インポート設定には</h3>
 <h3>カラム番号にはシート元のカラム番号を入れてください</h3>
-
+<br>
 <button id="fetch-data-btn">カラムを取得</button>
-<div id="data-display-area"></div>
+<table id="data-display-table" class="table">
+  <thead>
+    <tr id="table-header"></tr>
+  </thead>
+  <tbody id="table-body"></tbody>
+</table>
 
 <script>
     $(document).ready(function() {
         $("#fetch-data-btn").on("click", function() {
             $.get("/sheets/fetch_spreadsheet_data", function(data) {
-                let displayArea = $("#data-display-area");
-                displayArea.empty();
-                data.data.forEach(function(row) {
-                    let para = $("<p>").text(row.join("| "));
-                    displayArea.append(para);
+                let tableHeader = $("#table-header");
+                let tableBody = $("#table-body");
+                tableHeader.empty();
+                tableBody.empty();
+                data.data.forEach(function(row, index) {
+                    if (index === 0) {
+                        // Generate table headers
+                        row.forEach(function(cell) {
+                            let header = $("<th>").text(cell);
+                            tableHeader.append(header);
+                        });
+                    } else {
+                        // Generate table rows
+                        let tr = $("<tr>");
+                        row.forEach(function(cell) {
+                            let td = $("<td>").text(cell);
+                            tr.append(td);
+                        });
+                        tableBody.append(tr);
+                    }
                 });
             });
         });
@@ -32,30 +51,39 @@
       </ul>
     </div>
   <% end %>
-
+<br>
   <div class="field">
     <%= f.label :title %>
     <%= f.collection_select :sheet_id, Sheet.all, :id, :title %>
   </div>
-
   <hr>
-<!--ネストされたインポート設定-->
+
+ネストされたインポート設定
+  <table class="table" >
+    <thead>
+      <tr>
+        <th>カラム番号</th>
+        <th>インポート番号</th>
+      </tr>
+    </thead>
+    <tbody>
     <%= f.fields_for :import_details do |detail_fields| %>
-      <div class="container">
-        <div class="field">
-          <%#= detail_fields.hidden_field :sheet_column_number, value: detail_fields.index + 1 %>
+      <tr>
+        <td>
           <%= detail_fields.label :"カラム番号" %><br>
           <%= detail_fields.select :sheet_column_number,(1..20).to_a, required: true, include_blank: true %>
-        </div>
-        <div class="field" >
+        </td>
+        <td>
           <%= detail_fields.label :"インポート設定" %><br>
-          <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] },
-                                   { include_blank: '選択してください' } %>
-        </div>
-      </div>
-    <br>
+          <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] }, { include_blank: '選択してください' } %>
+       </td>
+      </tr>
     <% end %>
+    </tbody>
+  </table>
+
+
   <%= f.submit "設定を登録" %>
 <% end %>
-
+<br>
 <%= link_to "戻る", users_path %>
