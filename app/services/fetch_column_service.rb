@@ -11,7 +11,11 @@ class FetchColumnService
     @fetch_range = range
   end
 
+  # シートの情報が格納されているのはオブジェクトなので、
+  # オブジェクトの必要なデータ（今回はカラム情報2行分）のみを抽出する
   def fetch_values
-    @spreadsheets.get_values(@fetch_spreadsheet_id, @fetch_range)
+    fetch_data = @spreadsheets.get_values(@fetch_spreadsheet_id, @fetch_range)
+    row_values = fetch_data.instance_variable_get(:@values)
+    first_two_rows = row_values.first(2)
   end
 end

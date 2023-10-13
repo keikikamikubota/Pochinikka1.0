@@ -11,7 +11,7 @@
         $("#fetch-data-btn").on("click", function() {
             $.get("/sheets/fetch_spreadsheet_data", function(data) {
                 let displayArea = $("#data-display-area");
-                displayArea.empty(); // Clear the display area
+                displayArea.empty();
 
                 data.data.forEach(function(row) {
                     let para = $("<p>").text(row.join("| "));

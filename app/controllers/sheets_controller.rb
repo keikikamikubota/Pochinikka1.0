@@ -59,8 +59,7 @@ class SheetsController < ApplicationController
   def fetch_spreadsheet_data
     fetch_column_service = FetchColumnService.new(Sheet.new)
     google_response = fetch_column_service.fetch_values
-    @data = google_response.values
-    binding.pry
+    @data = google_response
     render json: { data: @data }
   end
   

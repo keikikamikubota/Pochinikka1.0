@@ -25,5 +25,6 @@ class Google::Spreadsheets
   # 指定されたスプレッドシートIDとレンジ（範囲）から値を取得
   def get_values(spreadsheet_id, range)
     @service.get_spreadsheet_values(spreadsheet_id, range)
+    # binding.pry
   end
 end
