@@ -3,7 +3,7 @@
 <h3>インポート設定には</h3>
 <h3>カラム番号にはシート元のカラム番号を入れてください</h3>
 
-<button id="fetch-data-btn">データを取得</button>
+<button id="fetch-data-btn">カラムを取得</button>
 <div id="data-display-area"></div>
 
 <script>
@@ -12,7 +12,6 @@
             $.get("/sheets/fetch_spreadsheet_data", function(data) {
                 let displayArea = $("#data-display-area");
                 displayArea.empty();
-
                 data.data.forEach(function(row) {
                     let para = $("<p>").text(row.join("| "));
                     displayArea.append(para);
@@ -23,7 +22,6 @@
 </script>
 
 <%= form_with(model: @sheet, local: true) do |f| %>
-
   <% if @sheet.errors.any? %>
     <div id="error_explanation">
       <h2><%= @sheet.errors.count %>件のエラーがあります。</h2>
@@ -43,23 +41,20 @@
   <hr>
 <!--ネストされたインポート設定-->
     <%= f.fields_for :import_details do |detail_fields| %>
-      <div class="field">
-        <%#= detail_fields.hidden_field :sheet_column_number, value: detail_fields.index + 1 %>
-        <%= detail_fields.label :"カラム番号" %><br>
-        <%= detail_fields.select :sheet_column_number,(1..20).to_a, required: true %>
-        <%#= detail_fields.index + 1 %>
+      <div class="container">
+        <div class="field">
+          <%#= detail_fields.hidden_field :sheet_column_number, value: detail_fields.index + 1 %>
+          <%= detail_fields.label :"カラム番号" %><br>
+          <%= detail_fields.select :sheet_column_number,(1..20).to_a, required: true %>
+        </div>
+        <div class="field" >
+          <%= detail_fields.label :"インポート設定" %><br>
+          <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] },
+                                   { include_blank: '選択してください' } %>
+        </div>
       </div>
-
-      <div class="field" >
-        <%= detail_fields.label :"インポート設定" %><br>
-        <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] },
-                                 { include_blank: '選択してください' } %>
-
-      </div>
-
     <br>
     <% end %>
-
   <%= f.submit "設定を登録" %>
 <% end %>
 
