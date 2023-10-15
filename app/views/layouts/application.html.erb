@@ -28,7 +28,7 @@
         { text: "顧客リスト", path: users_path },
         { text: "インポート設定", path: new_sheet_path },
         { text: "エクスポート", path: export_to_google_sheets_users_path, method: :post, data: { confirm: "本当にエクスポートしますか？" }, class: "nav-link  text-custom-color" },
-         { text: current_user.name, path: admin_path(current_user.id) }
+        { text: current_user.name, path: admin_path(current_user.id) }
       ] %>
       <% sidebar_links.each do |link| %>
         <li class="nav-item">

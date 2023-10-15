@@ -45,7 +45,9 @@ class UsersController < ApplicationController
   # エクスポートを実行するメソッド
   def export_to_google_sheets
     #エクスポート実行のコードを呼び出す
+    # binding.pry
     ExportUsersService.new.call
+    # binding.pry
     redirect_to users_path, notice: 'エクスポートが完了しました。'
   end
 
