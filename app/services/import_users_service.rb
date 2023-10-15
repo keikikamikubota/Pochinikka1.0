@@ -1,7 +1,7 @@
 class ImportUsersService
   # インポート元のシートのURLとシート名、セル範囲を指定
   SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
-  RANGE = 'テスト用シート!A4:F7'
+  RANGE = 'テスト用シート!A4:I18'
   # 別タブ　fetchの方も合わせて変更すること
   # RANGE = 'サンプル顧客シート!A4:F7'
 
