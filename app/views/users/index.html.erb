@@ -1,44 +1,57 @@
+<%= stylesheet_link_tag "application", "users", "data-turbo-track": "reload" %>
+
 <h1>顧客マスタ一覧</h1>
 
-<%= link_to 'インポート設定', new_sheet_path  %>
-<%= button_to 'エクスポートを実行する', export_to_google_sheets_users_path, method: :post, data: { confirm: "本当にエクスポートしますか？" }  %>
-
 <h3>ユーザー検索</h3>
-  <%= search_form_for @q, url: users_path do |f| %>
-    <%= f.label :name_or_email_or_phone_or_note_or_admin_note_cont, 'キーワード' %>
-    <%= f.search_field :name_or_email_or_phone_or_note_or_admin_note_cont %>
+<%= search_form_for @q, url: users_path, class: 'mb-3' do |f| %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.label :name_or_email_or_phone_or_note_or_admin_note_cont, 'キーワード' %>
+      <%= f.search_field :name_or_email_or_phone_or_note_or_admin_note_cont, class: 'form-control' %>
+    </div>
+    <div class="col-md-4 status-field">
+      <%= f.label :status_id_eq, 'ステータス' %>
+      <%= f.select :status_id_eq, Status.all.map { |status| [status.name, status.id] }, { include_blank: true }, class: 'form-select' %>
+    </div>
 
-    <%= f.label :status_id_eq, 'ステータス' %>
-    <%= f.select :status_id_eq, Status.all.map { |status| [status.name, status.id] }, { include_blank: true } %>
-  <br>
-    <%= f.submit '検索' %>
-    <%= link_to 'クリア', users_path %>
-  <% end %>
+    <div class="search-button">
+      <div class="mt-2 mb-2">
+        <%= f.submit '検索', class: 'btn btn-primary' %>
+      </div>
+      <div class="mt-2 mb-2 ml-2">
+        <%= link_to 'クリア', users_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 <hr>
-<%= link_to '新規顧客作成', new_user_path  %>
+<%= link_to '新規顧客作成', new_user_path, class: 'btn btn-primary mb-2' %>
 
 <table class="table table-striped">
   <thead>
   <tr>
     <th><%= sort_link(@q, :name, '顧客名') %></th>
-    <th><%= sort_link(@q, :name, 'email') %></th>
+    <th><%= sort_link(@q, :email, 'Email') %></th>
     <th>TEL</th>
-    <th> <%= sort_link(@q, :status_id, 'ステータス') %></th>
+    <th><%= sort_link(@q, :status_id, 'ステータス') %></th>
     <th>備考</th>
     <th>管理者メモ</th>
-    <th><%= sort_link(@q, :created_at, '作成日') %> |</th>
-    <th>option1</th>
-    <th>option2</th>
-    <th>option3</th>
+    <th><%= sort_link(@q, :created_at, '作成日') %></th>
+    <th>Option 1</th>
+    <th>Option 2</th>
+    <th>Option 3</th>
+    <th>詳細</th>
+    <th>編集</th>
+    <th>削除</th>
   </tr>
   </thead>
 
   <tbody>
-  <% @users.each do |user|%>
+  <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= user.email %>
+      <td><%= user.email %></td>
       <td><%= user.phone %></td>
       <td><%= user.status.name %></td>
       <td><%= user.note %></td>
@@ -47,12 +60,12 @@
       <td><%= user.option1 %></td>
       <td><%= user.option2 %></td>
       <td><%= user.option3 %></td>
-      <td><%= link_to "詳細", user %></td>
-      <td><%= link_to "編集", edit_user_path(user) %></td>
-      <td><%= button_to "削除", user, method: :delete,
-                        data: { turbo_confirm: "本当に削除しますか？" } %></td>
+      <td><%= link_to "詳細", user, class: 'btn btn-primary btn-sm' %></td>
+      <td><%= link_to "編集", edit_user_path(user), class: 'btn btn-secondary btn-sm' %></td>
+      <td><%= button_to "削除", user, method: :delete, data: { turbo_confirm: "本当に削除しますか？" }, class: 'btn btn-danger btn-sm' %></td>
     </tr>
   <% end %>
+  </tbody>
 </table>
 
 <%= paginate @users, class: 'twitter-bootstrap-5' %>

@@ -19,6 +19,7 @@ class SheetsController < ApplicationController
   # showアクションをインポート参照アクションとして利用
   def show
     @sheet = Sheet.find(params[:id])
+    binding.pry
   end
 
   def edit

@@ -59,6 +59,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(%i[name email phone note admin_note status_id option1 option2 option3])
+    params.require(:user).permit(%i[name email phone note admin_note status_id
+    option1 option2 option3 option4 option5 option6 option7 option8 option9 option10])
   end
 end
