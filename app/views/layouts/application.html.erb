@@ -1,23 +1,69 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Pochinikka</title>
+    <title>PochiNikka</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-  </head>
+    <!-- Bootstrap JavaScript (with Popper.js)  Popper.jsがないとトグルボタンが動かない -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
-  <body>
+  </head>
   <% flash.each do |key, value| %>
     <%= content_tag(:div, value, class: "#{key}") %>
   <% end %>
+
+  <body>
+  <nav id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 text-dark">
+    <!-- ブランドロゴ画像 -->
+    <%= link_to users_path do %>
+      <%= image_tag "logo.png", class: "mb-2", size: "150x40" %>
+    <% end %>
   <% if logged_in? %>
-    <%= link_to current_user.name, admin_path(current_user.id), class: "btn btn-outline-success" %>
-    <%= button_to "Logout", session_path(current_user.id), method: :delete %>
-  <% end %>
-    <%= yield %>
+    <ul class="nav flex-column">
+      <% sidebar_links = [
+        { text: "顧客リスト", path: users_path },
+        { text: "インポート設定", path: new_sheet_path },
+        { text: current_user.name, path: admin_path(current_user.id) }
+      ] %>
+      <% sidebar_links.each do |link| %>
+        <li class="nav-item">
+          <%= link_to link[:text], link[:path], class: "nav-link text-custom-color" %>
+        </li>
+      <% end %>
+      <%= button_to "Logout", session_path(current_user.id), method: :delete, class: "nav-link  text-custom-color" %>
+    </ul>
+      <% else %>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link text-custom-color" >ログインが必要です</a>
+        </li>
+      </ul>
+    <% end %>>
+  </nav>
+
+
+  <!--  <nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">-->
+<!--    <div class="container-fluid">-->
+<!--      <a class="navbar-brand" href="#">Pochinikka</a>-->
+<!--      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDark" aria-controls="navbarDark" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--      </button>-->
+<!--      <div class="collapse navbar-collapse show" id="navbarDark">-->
+<!--        <ul class="navbar-nav me-auto mb-2 mb-xl-0">-->
+<!--          <li class="nav-item">-->
+<!--            <a class="nav-link" href="#">Features</a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nav>-->
+
+  <div class="content">
+    <%= yield  %>
+  </div>
   </body>
 </html>

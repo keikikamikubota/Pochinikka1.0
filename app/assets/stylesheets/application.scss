@@ -14,3 +14,22 @@
  *= require_self
  */
 @import "bootstrap";
+
+.text-custom-color {
+  color: #f8f8ff; /* カスタムの色コードを指定 */
+}
+
+.content {
+  margin-left: 180px;
+  padding: 15px;
+  background-color: #f8f9fa;
+}
+
+nav#sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #262626;
+  /* 他のスタイルルール */
+}

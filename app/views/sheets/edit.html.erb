@@ -1,4 +1,4 @@
-<h1>インポート設定</h1>
+<h1>インポート設定(編集)</h1>
 <br>
 <h3>取得ボタンを見ながらカラムを割り振ると簡単に設定ができます。</h3>
 <p>※元シートのカラム行を指定して参照し、自動で番号を振っています</p>
@@ -37,7 +37,7 @@
     });
 </script>
 
-  <%= form_with(model: @sheet, local: true) do |f| %>
+<%= form_with(model: @sheet, local: true) do |f| %>
   <% if @sheet.errors.any? %>
     <div id="error_explanation">
       <h2><%= @sheet.errors.count %>件のエラーがあります。</h2>
@@ -48,20 +48,20 @@
       </ul>
     </div>
   <% end %>
-<br>
+  <br>
   <div class="field">
     <%= f.label :title %>
     <%= f.collection_select :sheet_id, Sheet.all, :id, :title %>
   </div>
   <hr>
 
-<!--  ネストされたインポート設定-->
+  <!--  ネストされたインポート設定-->
   <table class="table" >
     <thead>
-      <tr>
-        <th>カラム番号</th>
-        <th>インポート番号</th>
-      </tr>
+    <tr>
+      <th>カラム番号</th>
+      <th>インポート番号</th>
+    </tr>
     </thead>
     <tbody>
     <%= f.fields_for :import_details do |detail_fields| %>
@@ -73,7 +73,7 @@
         <td>
           <%= detail_fields.label :"インポート設定" %><br>
           <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] }, { include_blank: '選択してください' } %>
-       </td>
+        </td>
       </tr>
     <% end %>
     </tbody>
@@ -82,7 +82,7 @@
 
 
   <%= f.submit "設定を登録", class: "btn btn-primary" %>
-<%= link_to "戻る", users_path, class: "btn btn-secondary" %>
+  <%= link_to "戻る", users_path, class: "btn btn-secondary" %>
 <% end %>
 
 

@@ -1,11 +1,21 @@
-<h1>Log in</h1>
-<%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+<%= stylesheet_link_tag "application", "login", "data-turbo-track": "reload" %>
 
-  <%= f.label :メールアドレス %>
-  <%= f.email_field :email %>
+<div class="centered-container">
+  <h1>Log in</h1>
+  <hr>
+    <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+    <div class="centered-box">
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+    </div>
+    <div class="centered-box">
+      <%= f.label :パスワード %>
+      <%= f.password_field :password %>
+        </div>
+        <div class="centered-box">
 
-  <%= f.label :パスワード %>
-  <%= f.password_field :password %>
+        <%= button_to "Log in", sessions_path, method: :post, class: "btn btn-outline-primary" %>
 
-  <%= f.submit "Log in" %>
-<% end %>
+        </div>
+    <% end %>
+</div>

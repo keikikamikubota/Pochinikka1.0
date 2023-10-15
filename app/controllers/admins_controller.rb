@@ -6,7 +6,6 @@ class AdminsController < ApplicationController
 
   def show
     @admin = Admin.find(params[:id])
-    binding.pry
     if @admin.id != current_user.id
       flash[:alert] =  "本人以外のユーザー閲覧はできません"
       redirect_to users_path
@@ -25,6 +24,16 @@ class AdminsController < ApplicationController
       redirect_to admin_path(@admin.id)
     else
       render :new
+    end
+  end
+
+  def update
+    @admin = Admin.find(params[:id])
+    if @admin.update(admin_params)
+      flash[:success] = "更新が完了しました。"
+      redirect_to admin_path(@admin.id)
+    else
+      render :edit
     end
   end
 

@@ -27,8 +27,8 @@ class SheetsController < ApplicationController
 
   def update
     @sheet = Sheet.find(params[:id])
-    if @sheet.update(import_detail_params)
-      redirect_to import_detail_path(@sheet), notice: "更新が完了しました"
+    if @sheet.update(sheet_params)
+      redirect_to sheet_path(@sheet), notice: "更新が完了しました"
     else
       render :edit
     end
@@ -50,6 +50,7 @@ class SheetsController < ApplicationController
     redirect_to users_path(params[:id])
   end
 
+  # カラム数を取得するメソッド
   def fetch_spreadsheet_data
     fetch_column_service = FetchColumnService.new(Sheet.new)
     google_response = fetch_column_service.fetch_values
