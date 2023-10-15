@@ -18,7 +18,6 @@
       <!-- データはここに追加されます -->
     </div>
   </div>
-
   <script>
       $(document).ready(function() {
           $("#fetch-data-btn").on("click", function() {
@@ -42,27 +41,23 @@
   </script>
   <hr>
   <p >以下の内容でインポートします</p>
-
   <% @sheet.import_details.each do |import_detail| %>
-    <div class="card mt-3">
-      <div class="card-body">
-        <ul>
-          <li>
-            <strong>カラム番号:</strong> <%= import_detail.sheet_column_number %>
-          </li>
-          <li>
-            <strong>インポート設定:</strong> <%= import_detail.selected_title %>
-          </li>
-        </ul>
+    <% unless import_detail.selected_title.nil? && import_detail.sheet_column_number.nil? %>
+      <div class="card mt-3">
+        <div class="card-body">
+          <ul>
+            <li>
+              <strong>カラム番号:</strong> <%= import_detail.sheet_column_number %>
+            </li>
+            <li>
+              <strong>インポート設定:</strong> <%= import_detail.selected_title %>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>
-
-<!--<div class="mt-4">-->
-  <%#= link_to "設定に戻る", new_sheet_path, class: "btn btn-primary" %>
-  <%#= button_to 'Import Users', import_exec_sheet_path(@sheet), method: :post, data: { confirm: 'Are you sure you want to import data?' }, class: "btn btn-success" %>
-<!--</div>-->
 
 <div class="mt-4 d-flex justify-content-between">
   <%= link_to "設定し直す", edit_sheet_path(@sheet), class: "btn btn-primary" %>
