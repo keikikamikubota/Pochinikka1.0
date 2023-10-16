@@ -45,11 +45,14 @@ class UsersController < ApplicationController
 
   # エクスポートを実行するメソッド
   def export_to_google_sheets
-    #エクスポート実行のコードを呼び出す
-    # binding.pry
-    ExportUsersService.new.call
-    # binding.pry
-    redirect_to users_path, notice: 'エクスポートが完了しました。'
+    spreadsheet_id = params[:spreadsheet_id]
+    range = params[:range]
+    if ExportUsersService.new(spreadsheet_id, range).call
+      flash[:notice] = 'エクスポートが完了しました。'
+    else
+      flash[:alert] = 'エクスポートに失敗しました。'
+    end
+    redirect_to users_path
   end
 
   private

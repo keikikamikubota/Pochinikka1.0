@@ -43,11 +43,11 @@ class SheetsController < ApplicationController
 
   def import_exec
     @sheet = Sheet.find(params[:id])
-    import_users_service = ImportUsersService.new(@sheet)
+    spreadsheet_id = @sheet.spreadsheet_id
+    range = @sheet.range
+    import_users_service = ImportUsersService.new(@sheet, spreadsheet_id, range)
     if import_users_service.call
-      # フラッシュメッセージを設定
       flash[:notice] = 'インポートが完了しました!'
-      # show アクションにリダイレクト
       redirect_to users_path(params[:id])
     else
       # インポートに失敗した場合、バリデーションエラーメッセージを取得
@@ -77,8 +77,8 @@ class SheetsController < ApplicationController
   end
 
   def sheet_params
-    params.require(:sheet).permit(:title, :code,
-                                  import_details_attributes: [:id, :sheet_column_number, :selected_title, :sheet_id])
+    params.require(:sheet).permit(:title, :code, :spreadsheet_id, :range, :sheet_id,
+                                  import_details_attributes: [:id, :sheet_column_number, :selected_title])
   end
 end
 

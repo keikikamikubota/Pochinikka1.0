@@ -2,8 +2,8 @@ class ImportUsersService
   attr_reader :errors
 
   # インポート元のシートのURLとシート名、セル範囲を指定
-  SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
-  RANGE = 'テスト用シート!A4:I7'
+  # SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
+  # RANGE = 'テスト用シート!A4:I7'
   # エクスポート側のrangeも確認すること
   # RANGE = 'サンプル顧客シート!A4:F7'
 
@@ -13,6 +13,8 @@ class ImportUsersService
     @sheet = sheet
     @spreadsheet_id = spreadsheet_id
     @range = range
+    @errors = []
+    binding.pry
   end
 
   # データを抽出する。それをもとにインポート実行する

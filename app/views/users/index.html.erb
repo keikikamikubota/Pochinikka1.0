@@ -27,8 +27,15 @@
 <hr>
 <div class="d-flex justify-content-between mb-2">
   <%= link_to '新規顧客作成', new_user_path, class: 'btn btn-primary' %>
-  <%= button_to "エクスポート", export_to_google_sheets_users_path, method: :post, data: { turbo_confirm: "本当にエクスポートしますか？" }, class: 'btn btn-warning' %>
+  <%#= button_to "エクスポート", export_to_google_sheets_users_path, method: :post, data: { turbo_confirm: "本当にエクスポートしますか？" }, class: 'btn btn-warning' %>
 </div>
+
+<%= form_with url: export_to_google_sheets_users_path, method: :post, local: true do |form| %>
+  <%= form.text_field :spreadsheet_id, placeholder: "Spreadsheet ID" %>
+  <%= form.text_field :range, placeholder: "Range" %>
+  <%= form.submit "エクスポート", data: { turbo_confirm: "エクスポートを実行してよろしいですか？" }, class: 'btn btn-warning' %>
+<% end %>
+
 <table class="table table-striped">
   <thead>
   <tr>
