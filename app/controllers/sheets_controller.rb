@@ -87,7 +87,7 @@ class SheetsController < ApplicationController
 
       if @data.present?
         # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
-        @data.destroy_all
+        @data.clear
         @data.size.times { @sheet.import_details.build }
       else
         build_default_details

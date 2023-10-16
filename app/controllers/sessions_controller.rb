@@ -19,6 +19,6 @@ class SessionsController < ApplicationController
   def destroy
     session.delete(:admin_id)
     flash[:notice] = 'ログアウトしました'
-    redirect_to new_session_path
+    redirect_to new_session_path, turbolinks: false
   end
 end

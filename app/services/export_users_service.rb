@@ -1,9 +1,6 @@
 require 'google_drive'
 
 class ExportUsersService
-  # SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
-  # RANGE = 'シート8!A2'
-
   def initialize(spreadsheet_id = SPREADSHEET_ID, range = RANGE)
     @spreadsheet_id = spreadsheet_id
     @range = range
