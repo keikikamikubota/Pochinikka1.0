@@ -12,13 +12,14 @@ class SheetsController < ApplicationController
     if @sheet.update(sheet_params)
       redirect_to sheet_path(@sheet)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   # showアクションをインポート参照アクションとして利用
   def show
     @sheet = Sheet.find(params[:id])
+    @user = User.new
   end
 
   def edit
@@ -30,7 +31,7 @@ class SheetsController < ApplicationController
     if @sheet.update(sheet_params)
       redirect_to sheet_path(@sheet), notice: "更新が完了しました"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -41,13 +42,34 @@ class SheetsController < ApplicationController
   end
 
   #  インポートの実行をするメソッド。
+  # def import_exec
+  #   @sheet = Sheet.find(params[:id])
+  #   if ImportUsersService.new(@sheet).call
+  #     # フラッシュメッセージを設定
+  #     flash[:notice] = 'インポートが完了しました!'
+  #     # showアクションにリダイレクト
+  #     redirect_to users_path(params[:id])
+  #   else
+  #     # @user = import_users_service.user
+  #     flash[:alert] = 'インポートに失敗しました。'
+  #     render 'sheets/show'
+  #   end
+  # end
+
   def import_exec
     @sheet = Sheet.find(params[:id])
-    ImportUsersService.new(@sheet).call
-    # フラッシュメッセージを設定
-    flash[:notice] = 'インポートが完了しました!'
-    # showアクションにリダイレクト
-    redirect_to users_path(params[:id])
+    import_users_service = ImportUsersService.new(@sheet)
+    if import_users_service.call
+      # フラッシュメッセージを設定
+      flash[:notice] = 'インポートが完了しました!'
+      # show アクションにリダイレクト
+      redirect_to users_path(params[:id])
+    else
+      # インポートに失敗した場合、バリデーションエラーメッセージを取得
+      @user = import_users_service.user
+      flash[:alert] = 'インポートに失敗しました。'
+      render 'sheets/show'
+    end
   end
 
   # カラム数を取得するメソッド

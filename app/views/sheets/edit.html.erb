@@ -37,7 +37,7 @@
     });
 </script>
 
-<%= form_with(model: @sheet, local: true) do |f| %>
+<%= form_with(model: @sheet, local: true, data: {turbo: false}) do |f| %>
   <% if @sheet.errors.any? %>
     <div id="error_explanation">
       <h2><%= @sheet.errors.count %>件のエラーがあります。</h2>

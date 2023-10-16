@@ -42,7 +42,7 @@
 <div class="container mt-4">
   <h1 class="mb-4">顧客情報を編集</h1>
 
-  <%= form_with(model: @user, local: true) do |f| %>
+  <%= form_with(model: @user, local: true, data: {turbo: false} ) do |f| %>
     <% if @user.errors.any? %>
       <div id="error_explanation">
         <h2><%= @user.errors.count %>件のエラーがあります。</h2>

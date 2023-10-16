@@ -8,16 +8,13 @@ class ExportUsersService
   def initialize(spreadsheet_id = SPREADSHEET_ID, range = RANGE)
     @spreadsheet_id = spreadsheet_id
     @range = range
-    binding.pry
   end
 
   def session
-    binding.pry
   @session = GoogleDrive::Session.from_config('config.json')
   end
 
   def sheet
-    binding.pry
     @sheet ||= session.spreadsheet_by_key(@spreadsheet_id).worksheet_by_title("エクスポート用")
   end
 

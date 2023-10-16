@@ -1,8 +1,10 @@
 class ImportUsersService
+  attr_reader :errors
+
   # インポート元のシートのURLとシート名、セル範囲を指定
   SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
-  RANGE = 'テスト用シート!A4:I18'
-  # 別タブ　fetchの方も合わせて変更すること
+  RANGE = 'テスト用シート!A4:I7'
+  # エクスポート側のrangeも確認すること
   # RANGE = 'サンプル顧客シート!A4:F7'
 
   def initialize(sheet, spreadsheet_id = SPREADSHEET_ID, range = RANGE)
@@ -38,9 +40,13 @@ class ImportUsersService
       #attrに紐づいたインポート設定をもとにuserを作成していく
       user = User.find_by(email: attr[:email])
       if  user
-        user.update!(attr)
+        unless user.update(attr)
+        @errors << {row: row, messages: user.errors.full_messages}
+        end
       else
-        User.create!(attr)
+        unless User.create(attr)
+          @errors << {row: row, messages: new_user.errors.full_messages}
+        end
       end
     end
   end

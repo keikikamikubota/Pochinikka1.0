@@ -1,3 +1,15 @@
+<% if @errors.present? %>
+  <div id="error_explanation">
+    <h2>以下の行でエラーが発生しました</h2>
+    <% @errors.each do |error| %>
+      <ul>
+        <li><strong>行:</strong> <%= error[:row].join(", ") %></li>
+        <li><strong>エラー:</strong> <%= error[:messages].join(", ") %></li>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
+
 <h1>インポート参照</h1>
 
 <div class="container">
@@ -5,40 +17,10 @@
     <div class="col-md-6">
       <strong>シート名:</strong> <%= @sheet.title %>
     </div>
-    <div class="col-md-6">
+    <div class="">
       <strong>シート番号:</strong> <%= @sheet.code %>
     </div>
   </div>
-  <button id="fetch-data-btn" class="btn btn-outline-primary">シートのカラムを取得</button>
-  <div id="data-container" class="mt-4 border p-3">
-    <div class="row" id="counter-list">
-      <!-- カウンター（数字）はここに追加されます -->
-    </div>
-    <div class="row" id="data-list">
-      <!-- データはここに追加されます -->
-    </div>
-  </div>
-  <script>
-      $(document).ready(function() {
-          $("#fetch-data-btn").on("click", function() {
-              $.get("/sheets/fetch_spreadsheet_data", function(data) {
-                  let dataList = $("#data-list");
-                  dataList.empty();
-                  let counterList = $("#counter-list");
-                  counterList.empty();
-
-                  data.data.forEach(function(item, index) {
-                      let listItem = $("<div>").addClass("col p-2 border").text(item);
-                      dataList.append(listItem);
-
-                      // カウンターの追加
-                      let counterItem = $("<div>").addClass("col p-2 border text-center").text(index + 1);
-                      counterList.append(counterItem);
-                  });
-              });
-          });
-      });
-  </script>
   <hr>
   <p >以下の内容でインポートします</p>
   <% @sheet.import_details.each do |import_detail| %>
@@ -61,6 +43,6 @@
 
 <div class="mt-4 d-flex justify-content-between">
   <%= link_to "設定し直す", edit_sheet_path(@sheet), class: "btn btn-primary" %>
-  <%= button_to 'インポート実行', import_exec_sheet_path(@sheet), method: :post, data: { confirm: '実行してもよろしいですか？' }, class: "btn btn-danger" %>
+  <%= button_to 'インポート実行', import_exec_sheet_path(@sheet), method: :post, data: { turbo_confirm: '実行してもよろしいですか？' }, class: "btn btn-danger" %>
 </div>
 

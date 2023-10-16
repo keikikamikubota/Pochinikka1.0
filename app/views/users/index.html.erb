@@ -1,8 +1,6 @@
 <%= stylesheet_link_tag "application", "users", "data-turbo-track": "reload" %>
 
 <h1>顧客マスタ一覧</h1>
-<!--{ text: "エクスポート", path: export_to_google_sheets_users_path, method: :post, data: { confirm: "本当にエクスポートしますか？" }, class: "nav-link  text-custom-color" },-->
-<%= button_to "エクスポート", export_to_google_sheets_users_path, method: :post, data: { confirm: "本当にエクスポートしますか？" }, class: 'btn btn-primary' %>
 <h3>ユーザー検索</h3>
 <%= search_form_for @q, url: users_path, class: 'mb-3' do |f| %>
   <div class="row">
@@ -27,8 +25,10 @@
 <% end %>
 
 <hr>
-<%= link_to '新規顧客作成', new_user_path, class: 'btn btn-primary mb-2' %>
-
+<div class="d-flex justify-content-between mb-2">
+  <%= link_to '新規顧客作成', new_user_path, class: 'btn btn-primary' %>
+  <%= button_to "エクスポート", export_to_google_sheets_users_path, method: :post, data: { turbo_confirm: "本当にエクスポートしますか？" }, class: 'btn btn-warning' %>
+</div>
 <table class="table table-striped">
   <thead>
   <tr>
