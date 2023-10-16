@@ -2,9 +2,8 @@ require 'google_drive'
 
 class ExportUsersService
   SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
-  RANGE = 'エクスポート用!A2'
+  RANGE = 'シート8!A2'
 
-  # -------------------------
   def initialize(spreadsheet_id = SPREADSHEET_ID, range = RANGE)
     @spreadsheet_id = spreadsheet_id
     @range = range
@@ -14,8 +13,9 @@ class ExportUsersService
   @session = GoogleDrive::Session.from_config('config.json')
   end
 
+  # ここのシート名の指定がないとエラーになる
   def sheet
-    @sheet ||= session.spreadsheet_by_key(@spreadsheet_id).worksheet_by_title("エクスポート用")
+    @sheet ||= session.spreadsheet_by_key(@spreadsheet_id).worksheet_by_title("シート8")
   end
 
   def call

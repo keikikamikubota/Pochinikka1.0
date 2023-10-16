@@ -41,21 +41,6 @@ class SheetsController < ApplicationController
     redirect_to users_path, flash: {success: "タスクが削除されました"}
   end
 
-  #  インポートの実行をするメソッド。
-  # def import_exec
-  #   @sheet = Sheet.find(params[:id])
-  #   if ImportUsersService.new(@sheet).call
-  #     # フラッシュメッセージを設定
-  #     flash[:notice] = 'インポートが完了しました!'
-  #     # showアクションにリダイレクト
-  #     redirect_to users_path(params[:id])
-  #   else
-  #     # @user = import_users_service.user
-  #     flash[:alert] = 'インポートに失敗しました。'
-  #     render 'sheets/show'
-  #   end
-  # end
-
   def import_exec
     @sheet = Sheet.find(params[:id])
     import_users_service = ImportUsersService.new(@sheet)
@@ -82,6 +67,7 @@ class SheetsController < ApplicationController
 
   private
 
+  # import_detailの発行回数をソートのカラム数から判別するメソッド
   def repeat_detail
     # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
     @data.destroy_all if @data.present?

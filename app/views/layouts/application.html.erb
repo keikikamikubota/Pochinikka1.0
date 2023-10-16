@@ -21,15 +21,35 @@
       <ul class="nav flex-column">
         <% sidebar_links = [
           { text: "顧客リスト", path: users_path },
-          { text: "インポート設定", path: new_sheet_path },
-          # { text: "エクスポート", path: export_to_google_sheets_users_path, method: :post, data: { confirm: "本当にエクスポートしますか？" }, class: "nav-link  text-custom-color" },
-          { text: current_user.name, path: admin_path(current_user.id) }
+          { text: "インポート設定", path: new_sheet_path }
+          # { text: current_user.name, path: admin_path(current_user.id)}
         ] %>
         <% sidebar_links.each do |link| %>
           <li class="nav-item">
             <%= link_to link[:text], link[:path], class: "nav-link text-custom-color" %>
           </li>
         <% end %>
+
+        <li class="nav-item">
+          <form data-controller="sheet-reference"
+                data-sheet-reference-target="form"
+                action="#"
+                method="get"
+                class="d-flex">
+            <input type="submit"
+                   value="インポート参照"
+                   class="nav-link text-custom-color ">
+            <input type="number"
+                   data-sheet-reference-target="input"
+                   name="id"
+                   class="form-control sheet-id-input"
+                   placeholder="ID"
+                   required>
+          </form>
+        </li>
+        <li class="nav-item">
+          <%= link_to current_user.name, admin_path(current_user.id), class: "nav-link text-custom-color" %>
+        </li>
         <%= button_to "Logout", session_path(current_user.id), method: :delete, class: "nav-link  text-custom-color" %>
       </ul>
         <% else %>
