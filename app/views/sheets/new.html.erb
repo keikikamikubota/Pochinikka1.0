@@ -1,13 +1,11 @@
-<h1>インポート設定</h1>
+<h1>新規インポート設定登録</h1>
 
 <!--ここにシートとセル範囲を入力して保存するフォームを作りたい。非同期でも良い。-->
-
 <br>
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-12">
-      <p class="text-muted">※元シートのカラム行を指定して参照し、自動で番号を振っています</p>
-      <p class="text-muted">もし元のカラム名とは別のカラム先に保存したい場合は、インポート設定を任意のものに割り振ってください</p>
+      <p class="text-muted">インポート設定は参照画面の編集から行ってください</p>
     </div>
   </div>
 </div>
@@ -23,30 +21,30 @@
       </ul>
     </div>
   <% end %>
+
+    <div class="text-field-box">
+      <%= f.label :title, "タイトル" %>
+      <%= f.text_field :title, id: "new-title" %>
+    </div>
+    <div class="text-field-box">
+      <%= f.label :spreadsheet_id, "スプレッドシートID" %>
+      <%= f.text_field :spreadsheet_id %>
+    </div>
+
+    <div class="text-field-box">
+      <%= f.label :range, "セル範囲" %> 例：Sheet1!A1:B2
+      <%= f.text_field :range %>
+    </div>
 <br>
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.collection_select :sheet_id, Sheet.all, :id, :title %>
-  </div>
-<!--シートIDとセル範囲-->
-  <div class="field">
-    <%= f.label :spreadsheet_id, "スプレッドシートID" %>
-    <%= f.text_field :spreadsheet_id %>
-  </div>
 
-  <div class="field">
-    <%= f.label :range, "セル範囲" %>
-    <%= f.text_field :range %>
-  </div>
   <hr>
-
-<!--  ネストされたインポート設定-->
+  <!--  ネストされたインポート設定-->
   <table class="table" >
     <thead>
-      <tr>
-        <th>カラム番号</th>
-        <th>インポート番号</th>
-      </tr>
+    <tr>
+      <th>カラム番号</th>
+      <th>インポート番号</th>
+    </tr>
     </thead>
     <tbody>
     <%= f.fields_for :import_details do |detail_fields| %>
@@ -58,13 +56,11 @@
         <td>
           <%= detail_fields.label :"インポート設定" %><br>
           <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] }, { include_blank: '選択してください' } %>
-       </td>
+        </td>
       </tr>
     <% end %>
     </tbody>
   </table>
-
-
 
   <%= f.submit "設定を登録", class: "btn btn-primary" %>
 <%= link_to "戻る", users_path, class: "btn btn-secondary" %>

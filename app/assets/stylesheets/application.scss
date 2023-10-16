@@ -37,3 +37,17 @@ nav#sidebar {
 .sheet-id-input {
   width: 60px;
 }
+
+.text-field-box {
+  width: 50%;
+}
+
+.text-field-box label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.text-field-box input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}

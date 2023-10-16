@@ -1,7 +1,7 @@
 class FetchColumnService
   # インポート元のシートのURLとシート名、セル範囲を指定
-  SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
-  RANGE = 'テスト用シート!A3:I3'
+  # SPREADSHEET_ID = '1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk'
+  # RANGE = 'テスト用シート!A3:I3'
   # カラム数字行がほしい場合はA2からの指定に変更すること
 
   def initialize(sheet, spreadsheet_id = SPREADSHEET_ID, range = RANGE)

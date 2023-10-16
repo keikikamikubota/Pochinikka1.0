@@ -48,7 +48,7 @@
 </div>
 
 <div class="mt-4 d-flex justify-content-between">
-  <%= link_to "設定し直す", edit_sheet_path(@sheet), class: "btn btn-primary" %>
+  <%= link_to "設定を編集", edit_sheet_path(@sheet), class: "btn btn-primary" %>
   <%= button_to 'インポート実行', import_exec_sheet_path(@sheet), method: :post, data: { turbo_confirm: '実行してもよろしいですか？' }, class: "btn btn-danger" %>
 </div>
 

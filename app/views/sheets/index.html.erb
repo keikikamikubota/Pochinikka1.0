@@ -1,0 +1,30 @@
+<h1>インポート設定一覧</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>シート名</th>
+      <th>コード番号</th>
+      <th>シートID</th>
+      <th>シートセル範囲</th>
+      <th>作成日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @sheets.each do |sheet| %>
+    <tr>
+      <td><%= sheet.title %></td>
+      <td><%= sheet.code %></td>
+      <td><%= sheet.spreadsheet_id[0..4] + "..." + sheet.spreadsheet_id[-5..-1] %></td>
+      <td><%= sheet.range %></td>
+      <td><%= sheet.created_at %></td>
+
+      <td><%= link_to "参照", sheet, class: 'btn btn-primary btn-sm' %></td>
+      <td><%= link_to "編集", edit_sheet_path(sheet), class: 'btn btn-secondary btn-sm' %></td>
+      <td><%= button_to "削除", sheet, method: :delete, data: { turbo_confirm: "本当に削除しますか？" }, class: 'btn btn-danger btn-sm' %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

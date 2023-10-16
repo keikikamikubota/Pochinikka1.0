@@ -1,18 +1,20 @@
 class SheetsController < ApplicationController
+  def index
+    @sheets = Sheet.all
+  end
+
   def new
     @sheet = Sheet.new
-    repeat_detail
+    build_default_details
   end
 
   def create
-    @sheet = Sheet.find_or_initialize_by(id: 1)
-    # インポート設定が重複しないように過去分を削除
-    @sheet.import_details.destroy_all
-    #今回は既存のid:1のシートのみと仮定するのでcreateではなくupdateにしている
-    if @sheet.update(sheet_params)
+    @sheet = Sheet.new(sheet_params)
+    if @sheet.save
+      flash[:notice] = "シートの作成に成功しました。"
       redirect_to sheet_path(@sheet)
     else
-      render :new, status: :unprocessable_entity
+      render new
     end
   end
 
@@ -24,6 +26,7 @@ class SheetsController < ApplicationController
 
   def edit
     @sheet = Sheet.find(params[:id])
+    repeat_detail
   end
 
   def update
@@ -38,7 +41,7 @@ class SheetsController < ApplicationController
   def destroy
     @sheet = Sheet.find(params[:id])
     @sheet.destroy
-    redirect_to users_path, flash: {success: "タスクが削除されました"}
+    redirect_to sheets_path, flash: {success: "シートが削除されました"}
   end
 
   def import_exec
@@ -68,16 +71,39 @@ class SheetsController < ApplicationController
   private
 
   # import_detailの発行回数をソートのカラム数から判別するメソッド
+  # def repeat_detail
+  #   # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
+  #   @data.destroy_all if @data.present?
+  #   fetch_column_service = FetchColumnService.new(@sheet, @sheet.spreadsheet_id, @sheet.range)
+  #   @data = fetch_column_service.fetch_values
+  #   @data.size.times { @sheet.import_details.build } if @data.present?
+  # end
+
+  # シート名が間違っている時apis::clienterrorになるので、その際は別メソッドに切り替える
   def repeat_detail
-    # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
-    @data.destroy_all if @data.present?
-    fetch_column_service = FetchColumnService.new(@sheet)
-    @data = fetch_column_service.fetch_values
-    @data.size.times { @sheet.import_details.build } if @data.present?
+    begin
+      fetch_column_service = FetchColumnService.new(@sheet, @sheet.spreadsheet_id, @sheet.range)
+      @data = fetch_column_service.fetch_values
+
+      if @data.present?
+        # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
+        @data.destroy_all
+        @data.size.times { @sheet.import_details.build }
+      else
+        build_default_details
+      end
+    rescue Google::Apis::ClientError
+      build_default_details
+    end
+  end
+
+  def build_default_details
+    @sheet.import_details.destroy_all if @sheet.import_details.present?
+    10.times { @sheet.import_details.build}
   end
 
   def sheet_params
-    params.require(:sheet).permit(:title, :code, :spreadsheet_id, :range, :sheet_id,
+    params.require(:sheet).permit(:title, :code, :spreadsheet_id, :range,
                                   import_details_attributes: [:id, :sheet_column_number, :selected_title])
   end
 end

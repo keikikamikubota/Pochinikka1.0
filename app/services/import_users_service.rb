@@ -14,7 +14,6 @@ class ImportUsersService
     @spreadsheet_id = spreadsheet_id
     @range = range
     @errors = []
-    binding.pry
   end
 
   # データを抽出する。それをもとにインポート実行する
