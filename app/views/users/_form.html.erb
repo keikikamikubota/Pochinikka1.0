@@ -1,85 +1,39 @@
-<%#= form_with(model: @user, local: true) do |f| %>
-  <%# if @user.errors.any? %>
-<!--    <div id="error_explanation">-->
-<!--      <h2><%#= @user.errors.count %>件のエラーがあります。</h2>-->
-<!--      <ul>-->
-        <%# @user.errors.full_messages.each do |message| %>
-<!--          <li><%#= message %></li>-->
-        <%# end %>
-<!--      </ul>-->
-<!--    </div>-->
-  <%# end %>
-
-<!--  <div class="user_name">-->
-    <%#= f.label :顧客名 %>
-    <%#= f.text_field :name %>
-<!--  </div>-->
-<!--  <div class="field">-->
-    <%#= f.label :email %>
-    <%#= f.text_field :email %>
-<!--  </div>-->
-<!--  <div class="field">-->
-    <%#= f.label :TEL %>
-    <%#= f.text_field :phone %>
-<!--  </div>-->
-<!--  <div class="field">-->
-    <%#= f.label :ステータス %>
-    <%#= f.collection_select(:status_id, Status.all, :id, :name, prompt: '選択してください') %>
-<!--  </div>-->
-<!--  <div class="field">-->
-    <%#= f.label :備考 %>
-    <%#= f.text_field :note %>
-<!--  </div>-->
-<!--  <div class="field">-->
-    <%#= f.label :管理者メモ %>
-    <%#= f.text_field :admin_note %>
-<!--  </div>-->
-
-  <%#= f.submit "保存" %>
-<%# end %>
-
-
-<div class="container mt-4">
-  <h1 class="mb-4">顧客情報を編集</h1>
-
-  <%= form_with(model: @user, local: true, data: {turbo: false} ) do |f| %>
-    <% if @user.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= @user.errors.count %>件のエラーがあります。</h2>
-        <ul>
-          <% @user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="form-group">
-      <%= f.label :顧客名 %>
-      <%= f.text_field :name, class: 'form-control' %>
+<%= form_with(model: @user, local: true, data: {turbo: false} ) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
-    <div class="form-group">
-      <%= f.label :メールアドレス %>
-      <%= f.text_field :email, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= f.label :TEL %>
-      <%= f.text_field :phone, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= f.label :ステータス %>
-      <%= f.collection_select(:status_id, Status.all, :id, :name, { prompt: '選択してください' }, { class: 'form-control' }) %>
-    </div>
-    <div class="form-group">
-      <%= f.label :備考 %>
-      <%= f.text_field :note, class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%= f.label :管理者メモ %>
-      <%= f.text_field :admin_note, class: 'form-control' %>
-    </div>
-
-    <%= f.submit "保存", class: 'btn btn-primary mt-2' %>
-    <%= link_to 'Index', users_path, class: 'btn btn-secondary mt-2' %>
   <% end %>
-</div>
+  <div class="form-group">
+    <%= f.label :顧客名 %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :メールアドレス %>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :TEL %>
+    <%= f.text_field :phone, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :ステータス %>
+    <%= f.collection_select(:status_id, Status.all, :id, :name, { prompt: '選択してください' }, { class: 'form-control' }) %>
+  </div>
+  <div class="form-group">
+    <%= f.label :備考 %>
+    <%= f.text_field :note, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :管理者メモ %>
+    <%= f.text_field :admin_note, class: 'form-control' %>
+  </div>
+  <%= f.submit "保存", class: 'btn btn-primary mt-2' %>
+  <%= link_to 'Index', users_path, class: 'btn btn-secondary mt-2' %>
+<% end %>
+

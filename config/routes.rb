@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get 'sessions/new'
   root 'users#index'
+  get 'sessions/new'
   resources :sessions, only: [:new, :create, :destroy]
   resources :admins, only: [:new, :create, :show, :edit, :update]
-  #user複数をまとめて登録するのでmemberではなくcollection
+  # user複数をまとめて登録するのでmemberではなくcollection
   resources :users do
     collection do
       post :export_to_google_sheets

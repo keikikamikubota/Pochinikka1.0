@@ -14,13 +14,13 @@ class UsersController < ApplicationController
   end
 
   def edit
-    #管理者ユーザーでない場合ログイン画面に遷移
     @user = User.find(params[:id])
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
+      flash[:notice] = "顧客を新規作成しました。"
       redirect_to user_path(@user.id)
     else
       render :new, status: :unprocessable_entity
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      flash[:notice] = 'メッセージが完了しました!'
+      flash[:notice] = '顧客の編集が完了しました!'
       redirect_to user_path
     else
       render :edit
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     spreadsheet_id = params[:spreadsheet_id]
     range = params[:range]
     if ExportUsersService.new(spreadsheet_id, range).call
-      flash[:notice] = 'エクスポートが完了しました。'
+      flash[:notice] = 'エクスポートが完了しました!'
     else
       flash[:alert] = 'エクスポートに失敗しました。'
     end

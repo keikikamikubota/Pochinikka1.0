@@ -23,11 +23,11 @@ gem 'bcrypt'
 gem 'bootstrap'
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
+gem 'faker'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'pry-rails'
-  gem 'faker'
 end
 
 group :development do

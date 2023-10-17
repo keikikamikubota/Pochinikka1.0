@@ -14,7 +14,6 @@ class ExportUsersService
   # ここのシート名の指定がないとエラーになる(google_driveが@sheet必要なため？)
   def sheet
     @sheet ||= session.spreadsheet_by_key(@spreadsheet_id).worksheet_by_title(@sheet_name)
-    # binding.pry
   end
 
   def call
@@ -30,7 +29,7 @@ class ExportUsersService
       sheet.save
       true
     rescue => e
-        Rails.logger.error "Export failed: #{e.message}"
+      Rails.logger.error "Export failed: #{e.message}"
       false
     end
   end

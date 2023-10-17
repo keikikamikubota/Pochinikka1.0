@@ -14,6 +14,7 @@ class SheetsController < ApplicationController
       flash[:notice] = "シートの作成に成功しました。"
       redirect_to sheet_path(@sheet)
     else
+      flash[:notice] = "入力に不備があります。"
       render new
     end
   end
@@ -50,10 +51,9 @@ class SheetsController < ApplicationController
     range = @sheet.range
     import_users_service = ImportUsersService.new(@sheet, spreadsheet_id, range)
     if import_users_service.call
-      flash[:notice] = 'インポートが完了しました!'
-      redirect_to users_path(params[:id])
+      flash[:notice] = 'インポートが完了しました！'
+      redirect_to users_path, turbolinks: false
     else
-      # インポートに失敗した場合、バリデーションエラーメッセージを取得
       @user = import_users_service.user
       flash[:alert] = 'インポートに失敗しました。'
       render 'sheets/show'
@@ -70,21 +70,11 @@ class SheetsController < ApplicationController
 
   private
 
-  # import_detailの発行回数をソートのカラム数から判別するメソッド
-  # def repeat_detail
-  #   # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
-  #   @data.destroy_all if @data.present?
-  #   fetch_column_service = FetchColumnService.new(@sheet, @sheet.spreadsheet_id, @sheet.range)
-  #   @data = fetch_column_service.fetch_values
-  #   @data.size.times { @sheet.import_details.build } if @data.present?
-  # end
-
-  # シート名が間違っている時apis::clienterrorになるので、その際は別メソッドに切り替える
+  # シート名が間違っている時apis::ClientErrorになるので、その際は別メソッドに切り替える
   def repeat_detail
     begin
       fetch_column_service = FetchColumnService.new(@sheet, @sheet.spreadsheet_id, @sheet.range)
       @data = fetch_column_service.fetch_values
-
       if @data.present?
         # リロードするとネストの数がどんどん増えてしまうので、その都度元の発行回数を削除してリセット
         @data.clear

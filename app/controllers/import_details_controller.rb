@@ -1,3 +1,2 @@
 class ImportDetailsController < ApplicationController
-  
 end

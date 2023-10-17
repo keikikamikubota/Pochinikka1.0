@@ -17,18 +17,15 @@
     <div class="col-md-6">
       <strong>シート名:</strong> <%= @sheet.title %>
     </div>
-    <div class="">
-      <strong>シート番号:</strong> <%= @sheet.code %>
-    </div>
-    <div class="">
+    <div>
       <strong>スプレッドシートID:</strong> <%= @sheet.spreadsheet_id %>
     </div>
-    <div class="">
+    <div>
       <strong>範囲:</strong> <%= @sheet.range %>
     </div>
   </div>
   <hr>
-  <p >以下の内容でインポートします</p>
+  <p>以下の内容でインポートします</p>
   <% @sheet.import_details.each do |import_detail| %>
     <% unless import_detail.selected_title.nil? && import_detail.sheet_column_number.nil? %>
       <div class="card mt-3">
