@@ -13,6 +13,17 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
+# ここから追加
+gem 'enum_help'
+gem 'dotenv-rails'
+gem 'googleauth'
+gem 'google_drive'
+gem 'ransack'
+gem 'bcrypt'
+gem 'bootstrap'
+gem 'kaminari'
+gem 'bootstrap5-kaminari-views'
+gem 'faker'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -26,6 +37,4 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
-
 end
-

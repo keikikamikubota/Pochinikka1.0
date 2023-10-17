@@ -1,0 +1,27 @@
+.centered-container {
+  display: flex;
+  justify-content: center; //グリッドレイアウトを中心に寄せる
+  flex-direction: column; //rowやcolumnのような並ばせ方ができる
+  align-items: center; //全部のitemを中心に寄せる。他にもstart stretchなどがある
+  height: 80vh;
+}
+
+.centered-box {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+label {
+  flex: 1; /* フォーム内で均等にスペースを占める */
+  text-align: left;
+  margin-right: 10px;
+}
+
+input[type="email"], input[type="password"] {
+  flex: 2;
+  width: 100%;
+}
+
+.login-logo {
+  margin-bottom: 50px;
+}

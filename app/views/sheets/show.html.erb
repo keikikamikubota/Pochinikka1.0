@@ -1,0 +1,51 @@
+<% if @errors.present? %>
+  <div id="error_explanation">
+    <h2>以下の行でエラーが発生しました</h2>
+    <% @errors.each do |error| %>
+      <ul>
+        <li><strong>行:</strong> <%= error[:row].join(", ") %></li>
+        <li><strong>エラー:</strong> <%= error[:messages].join(", ") %></li>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
+
+<h1>インポート参照</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <strong>シート名:</strong> <%= @sheet.title %>
+    </div>
+    <div>
+      <strong>スプレッドシートID:</strong> <%= @sheet.spreadsheet_id %>
+    </div>
+    <div>
+      <strong>範囲:</strong> <%= @sheet.range %>
+    </div>
+  </div>
+  <hr>
+  <p>以下の内容でインポートします</p>
+  <% @sheet.import_details.each do |import_detail| %>
+    <% unless import_detail.selected_title.nil? && import_detail.sheet_column_number.nil? %>
+      <div class="card mt-3">
+        <div class="card-body">
+          <ul>
+            <li>
+              <strong>カラム番号:</strong> <%= import_detail.sheet_column_number %>
+            </li>
+            <li>
+              <strong>インポート設定:</strong> <%= import_detail.selected_title %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="mt-4 d-flex justify-content-between">
+  <%= link_to "設定を編集", edit_sheet_path(@sheet), class: "btn btn-primary" %>
+  <%= button_to 'インポート実行', import_exec_sheet_path(@sheet), method: :post, data: { turbo_confirm: '実行してもよろしいですか？' }, class: "btn btn-danger" %>
+</div>
+

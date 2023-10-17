@@ -1,0 +1,15 @@
+
+<div class="container mt-4">
+  <h1 class="mb-4"><%= @admin.name %>のページ</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">名前: <%= @admin.name %></h5>
+      <p class="card-text">メールアドレス: <%= @admin.email %></p>
+    </div>
+  </div>
+
+  <%= link_to '編集する', edit_admin_path(@admin.id), class: 'btn btn-primary mt-3' %>
+  <%= link_to '一覧に戻る', users_path, class: 'btn btn-secondary mt-3' %>
+  <%= link_to '管理ユーザーを新規登録する', new_admin_path, class: 'btn btn-success mt-3' %>
+</div>

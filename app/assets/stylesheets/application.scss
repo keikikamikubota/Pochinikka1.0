@@ -13,3 +13,41 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
+
+.text-custom-color {
+  color: #f8f8ff;
+}
+
+// サイドバーの幅分bodyを右ずらししている。サイドバー開閉ができれば不要
+.content {
+  margin-left: 200px;
+  padding: 15px;
+  background-color: #f8f9fa;
+}
+
+nav#sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #262626;
+}
+
+.sheet-id-input {
+  width: 60px;
+}
+
+.text-field-box {
+  width: 50%;
+}
+
+.text-field-box label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.text-field-box input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}

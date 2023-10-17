@@ -1,31 +1,83 @@
+<%= stylesheet_link_tag "application", "users", "data-turbo-track": "reload" %>
+
 <h1>顧客マスタ一覧</h1>
+<h3>ユーザー検索</h3>
+<%= search_form_for @q, url: users_path, class: 'mb-3' do |f| %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= f.label :name_or_email_or_phone_or_note_or_admin_note_cont, 'キーワード' %>
+      <%= f.search_field :name_or_email_or_phone_or_note_or_admin_note_cont, class: 'form-control' %>
+    </div>
+    <div class="col-md-4 status-field">
+      <%= f.label :status_id_eq, 'ステータス' %>
+      <%= f.select :status_id_eq, Status.all.map { |status| [status.name, status.id] }, { include_blank: true }, class: 'form-select' %>
+    </div>
+
+    <div class="search-button">
+      <div class="mt-2 mb-2">
+        <%= f.submit '検索', class: 'btn btn-primary' %>
+      </div>
+      <div class="mt-2 mb-2 ml-2">
+        <%= link_to 'クリア', users_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<hr>
+
+<div class="d-flex justify-content-between mb-2">
+  <div class="d-flex align-items-center">
+    <%= link_to '新規顧客作成', new_user_path, class: 'btn btn-primary me-3' %>
+  </div>
+  <div class="d-flex">
+    <%= form_with url: export_to_google_sheets_users_path, method: :post, local: true, class: 'd-flex' do |form| %>
+      <%= form.text_field :spreadsheet_id, placeholder: "Spreadsheet ID", class: 'form-control me-2' %>
+      <%= form.text_field :range, placeholder: "Range", class: 'form-control me-2' %>
+      <%= form.submit "エクスポート", data: { turbo_confirm: "エクスポートを実行してよろしいですか？" }, class: 'btn btn-warning' %>
+    <% end %>
+  </div>
+</div>
 
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>顧客名</th>
-    <th>email</th>
+    <th><%= sort_link(@q, :name, '顧客名') %></th>
+    <th><%= sort_link(@q, :email, 'Email') %></th>
     <th>TEL</th>
-    <th>ステータス</th>
+    <th><%= sort_link(@q, :status_id, 'ステータス') %></th>
     <th>備考</th>
     <th>管理者メモ</th>
-    <th>作成日</th>
+    <th><%= sort_link(@q, :created_at, '作成日') %></th>
+    <th>Option 1</th>
+    <th>Option 2</th>
+    <th>Option 3</th>
+    <th>詳細</th>
+    <th>編集</th>
+    <th>削除</th>
   </tr>
   </thead>
 
   <tbody>
-  <% @users.each do |user|%>
+  <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= user.email %>
+      <td><%= user.email %></td>
       <td><%= user.phone %></td>
       <td><%= user.status.name %></td>
       <td><%= user.note %></td>
       <td><%= user.admin_note %></td>
-      <td><%= link_to "詳細", user %></td>
-      <td><%= link_to "編集", edit_user_path(user) %></td>
-      <td><%= button_to "削除", user, method: :delete,
-                        data: { turbo_confirm: "本当に削除しますか？" } %></td>
+      <td><%= user.created_at.strftime("%Y-%m-%d") %></td>
+      <td><%= user.option1 %></td>
+      <td><%= user.option2 %></td>
+      <td><%= user.option3 %></td>
+      <td><%= link_to "詳細", user, class: 'btn btn-primary btn-sm' %></td>
+      <td><%= link_to "編集", edit_user_path(user), class: 'btn btn-secondary btn-sm' %></td>
+      <td><%= button_to "削除", user, method: :delete, data: { turbo_confirm: "本当に削除しますか？" }, class: 'btn btn-danger btn-sm' %></td>
     </tr>
   <% end %>
-  </table>
+  </tbody>
+</table>
+
+<%= paginate @users, theme: 'bootstrap-5' %>
+

@@ -1,0 +1,18 @@
+<h1>シート詳細画面</h1>
+
+<strong>Sheet Column Number:</strong>
+<%= @import_detail.sheet_column_number %>
+</p>
+
+<p>
+  <strong>Selected Title:</strong>
+  <%= @import_detail.selected_title %>
+</p>
+
+<p>
+  <strong>Sheet ID:</strong>
+  <%= @import_detail.sheet_id %>
+</p>
+
+<%= link_to 'Edit', edit_import_detail_path(@import_detail) %> |
+<%= link_to 'Back', users_path %>

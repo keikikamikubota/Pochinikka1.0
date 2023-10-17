@@ -1,0 +1,60 @@
+<h1>インポート設定(編集)</h1>
+<br>
+<p>よくわからない場合は、インポート設定を上から順番に並べ、対応するカラム番号を選択してください。</p>
+<br>
+
+<%= form_with(model: @sheet, local: true, data: {turbo: false}) do |f| %>
+  <% if @sheet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @sheet.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @sheet.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <br>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.collection_select :sheet_id, Sheet.all, :id, :title %>
+  </div>
+  <!--シートIDとセル範囲-->
+  <div class="field">
+    <%= f.label :spreadsheet_id, "スプレッドシートID" %>
+    <%= f.text_field :spreadsheet_id %>
+  </div>
+  <div class="field">
+    <%= f.label :range, "セル範囲" %>
+    <%= f.text_field :range %>
+  </div>
+  <hr>
+  <!--  ネストされたインポート設定-->
+  <table class="table" >
+    <thead>
+      <tr>
+        <th>カラム番号</th>
+        <th>インポート番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :import_details do |detail_fields| %>
+        <tr>
+          <td>
+            <%= detail_fields.label :"カラム番号" %><br>
+            <%= detail_fields.select :sheet_column_number,(1..20).to_a, required: true, include_blank: true %>
+          </td>
+          <td>
+            <%= detail_fields.label :"インポート設定" %><br>
+            <%= detail_fields.select :selected_title, ImportDetail.selected_titles.keys.map { |key| [I18n.t("enums.import_detail.selected_title.#{key}"), key] }, { include_blank: '選択してください' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= f.submit "設定を更新", class: "btn btn-primary" %>
+  <%= link_to "戻る", sheet_path(@sheet), class: "btn btn-secondary" %>
+<% end %>
+
+

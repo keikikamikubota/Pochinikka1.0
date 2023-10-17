@@ -1,4 +1,4 @@
-<%= form_with(model: @user, local: true) do |f| %>
+<%= form_with(model: @user, local: true, data: {turbo: false} ) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= @user.errors.count %>件のエラーがあります。</h2>
@@ -9,31 +9,31 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="user_name">
+  <div class="form-group">
     <%= f.label :顧客名 %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
+  <div class="form-group">
+    <%= f.label :メールアドレス %>
+    <%= f.text_field :email, class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :TEL %>
-    <%= f.text_field :phone %>
+    <%= f.text_field :phone, class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :ステータス %>
-    <%= f.collection_select(:status_id, Status.all, :id, :name, prompt: '選択してください') %>
+    <%= f.collection_select(:status_id, Status.all, :id, :name, { prompt: '選択してください' }, { class: 'form-control' }) %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :備考 %>
-    <%= f.text_field :note %>
+    <%= f.text_field :note, class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :管理者メモ %>
-    <%= f.text_field :admin_note %>
+    <%= f.text_field :admin_note, class: 'form-control' %>
   </div>
-
-  <%= f.submit "保存" %>
+  <%= f.submit "保存", class: 'btn btn-primary mt-2' %>
+  <%= link_to 'Index', users_path, class: 'btn btn-secondary mt-2' %>
 <% end %>
+

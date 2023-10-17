@@ -1,0 +1,15 @@
+.status-field {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.search-button {
+  display: flex;
+}
+
+.search-button .btn {
+  margin-right: 10px;
+}

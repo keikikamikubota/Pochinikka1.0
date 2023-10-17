@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+  before_action :search, only: [:index]
+
   def index
-    @users = User.all
+    @users = @q.result(distinct: true).page(params[:page])
   end
 
   def show
@@ -9,17 +11,16 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @statuses = Status.all
   end
 
   def edit
-    #管理者ユーザーでない場合ログイン画面に遷移
     @user = User.find(params[:id])
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
+      flash[:notice] = "顧客を新規作成しました。"
       redirect_to user_path(@user.id)
     else
       render :new, status: :unprocessable_entity
@@ -29,7 +30,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to user_path, notice: "ユーザー情報を更新しました"
+      flash[:notice] = '顧客の編集が完了しました!'
+      redirect_to user_path
     else
       render :edit
     end
@@ -41,8 +43,29 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  # エクスポートを実行するメソッド
+  def export_to_google_sheets
+    spreadsheet_id = params[:spreadsheet_id]
+    range = params[:range]
+    if ExportUsersService.new(spreadsheet_id, range).call
+      flash[:notice] = 'エクスポートが完了しました!'
+    else
+      flash[:alert] = 'エクスポートに失敗しました。'
+    end
+    redirect_to users_path
+  end
+
   private
+
+  # ransack検索用メソッド
+  def search
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
+    @result = params[:q]&.values&.reject(&:blank?)
+  end
+
   def user_params
-    params.require(:user).permit(%i[name email phone  note admin_note status_id] )
+    params.require(:user).permit(%i[name email phone note admin_note status_id
+    option1 option2 option3 option4 option5 option6 option7 option8 option9 option10])
   end
 end
