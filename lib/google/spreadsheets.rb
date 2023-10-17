@@ -1,5 +1,5 @@
 require 'google_drive'
-#spreadsheetsクラスを作成し、内部でAPIとの認証を突破する。シートのセル範囲を指定する
+#spreadsheetsクラスを作成し、内部でAPIとの認証を突破する。
 class Google::Spreadsheets
   def initialize
     @service = Google::Apis::SheetsV4::SheetsService.new
@@ -25,6 +25,5 @@ class Google::Spreadsheets
   # 指定されたスプレッドシートIDとレンジ（範囲）から値を取得
   def get_values(spreadsheet_id, range)
     @service.get_spreadsheet_values(spreadsheet_id, range)
-    # binding.pry
   end
 end
