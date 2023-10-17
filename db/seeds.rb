@@ -11,16 +11,16 @@ end
 )
 
 Admin.create!(
-  name: "テスト管理者",
-  email: "admin@test.com",
-  password: 'test11',
-  password_confirmation: 'test11'
+  name: ENV['ADMIN_NAME'],
+  email: ENV['ADMIN_EMAIL'],
+  password: ENV['ADMIN_PASS'],
+  password_confirmation: ENV['ADMIN_PASS']
 )
 
 Sheet.create!(
-  title: "サンプルシート",
-  spreadsheet_id: "1u1tFGXUWaO0HC0c7jAokdJWC6kmXbU1Is_yktYtL0Vk",
-  range: "エクスポート用!A11:D17"
+  title: ENV['SHEET_TITLE'],
+  spreadsheet_id: ENV['SHEET_ID'],
+  range: ENV['SHEET_RANGE']
 )
 
 # require 'faker'
