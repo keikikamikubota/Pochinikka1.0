@@ -15,7 +15,13 @@
     <% @sheets.each do |sheet| %>
       <tr>
         <td><%= sheet.title %></td>
-        <td><%= sheet.spreadsheet_id[0..4] + "..." + sheet.spreadsheet_id[-5..-1] %></td>
+        <td>
+          <% if sheet.spreadsheet_id.length > 9 %>
+            <%= sheet.spreadsheet_id[0..4] + "..." + sheet.spreadsheet_id[-5..-1] %>
+          <% else %>
+            <%= sheet.spreadsheet_id %>
+          <% end %>
+        </td>
         <td><%= sheet.range %></td>
         <td><%= sheet.created_at.strftime("%Y-%m-%d") %></td>
         <td><%= link_to "参照", sheet, class: 'btn btn-primary btn-sm' %></td>
