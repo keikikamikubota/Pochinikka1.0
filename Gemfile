@@ -23,18 +23,24 @@ gem 'bcrypt'
 gem 'bootstrap'
 gem 'kaminari'
 gem 'bootstrap5-kaminari-views'
-gem 'faker'
+gem 'rexml'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'pry-rails'
+  gem 'faker'
 end
 
 group :development do
   gem "web-console"
+  gem 'rspec-rails'
+  gem 'spring-commands-rspec'
+  gem 'factory_bot_rails'
+  gem 'launchy'
 end
 
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'webdrivers'
 end

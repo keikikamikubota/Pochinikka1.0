@@ -19,7 +19,19 @@ module Pochinikka
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    #google以下を読み込むために/lib配下のファイル読み込みを指示
+    # google以下を読み込むために/lib配下のファイル読み込みを指示
     config.paths.add "lib", eager_load: true
+
+    # rspec設定
+    config.generators do |g|
+      g.test_framework :rspec,
+                       fixtures: true,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false,
+                       controller_specs: false,
+                       request_specs: false
+      g.fixture_replacement :factory_bot, dir: "spec/factories"
+    end
   end
 end
