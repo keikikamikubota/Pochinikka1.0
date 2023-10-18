@@ -1,0 +1,6 @@
+<!-- app/views/shared/_flash_messages.html.erb -->
+<div id="flash_messages">
+  <% flash.each do |key, message| %>
+    <%= content_tag(:div, message, class: "alert alert-sm #{bootstrap_class_for_flash(key)}") %>
+  <% end %>
+</div>

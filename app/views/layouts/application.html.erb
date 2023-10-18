@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PochiNikka</title>
+    <title>ポチニッカ</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -43,9 +43,7 @@
       <% end %>>
     </nav>
     <div class="content">
-      <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, class: "#{key}") %>
-      <% end %>
+      <%= render "shared/flash_messages", flash: flash %>
       <%= yield  %>
     </div>
   </body>

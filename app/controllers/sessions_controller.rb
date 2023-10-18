@@ -11,8 +11,13 @@ class SessionsController < ApplicationController
       flash[:notice] = 'ログインしました'
       redirect_to users_path
     else
-      flash[:danger] = 'ログインに失敗しました'
-      render :new
+      flash.now[:danger] = 'ログインに失敗しました'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("flash_messages", partial: "shared/flash_messages", locals: { flash: flash })
+        end
+        format.html { render :new }
+      end
     end
   end
 

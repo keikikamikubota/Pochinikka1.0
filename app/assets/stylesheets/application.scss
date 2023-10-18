@@ -51,3 +51,10 @@ nav#sidebar {
   width: 100%;
   box-sizing: border-box;
 }
+
+// カスタムの小さめのalertスタイル
+.alert-sm {
+  font-size: 0.875rem; // 通常より小さいフォントサイズ
+  padding: 0.25rem 0.5rem; // 通常より小さいパディング
+  border-radius: 0.25rem; // 通常の半分のボーダーラウンド
+}
