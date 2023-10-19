@@ -6,6 +6,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+<!--    エラーメッセージなどの非同期処理時のオフ-->
+    <meta name="turbo-visit-control" content="reload">
     <%= javascript_importmap_tags %>
     <!-- Bootstrap JavaScript (with Popper.js)  Popper.jsがないとトグルボタンが動かない -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>

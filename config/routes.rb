@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'users#index'
   get 'sessions/new'
   resources :sessions, only: [:new, :create, :destroy]
-  resources :admins, only: [:new, :create, :show, :edit, :update]
+  resources :admins, only: [:new, :create, :show, :edit, :update, :destroy]
   # user複数をまとめて登録するのでmemberではなくcollection
   resources :users do
     collection do
