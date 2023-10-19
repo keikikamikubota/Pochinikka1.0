@@ -1,0 +1,33 @@
+<%= form_with(model: @admin, local: true, data: {turbo: false}) do |f| %>
+  <% if @admin.errors.any? %>
+    <%= javascript_importmap_tags 'admins/render' %>
+    <div id="error_explanation">
+      <h2><%= @admin.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @admin.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :名前 %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :メールアドレス %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label action_name == 'new' ? 'パスワード' : '新パスワード' %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label action_name == 'new' ? 'パスワード確認' : '新パスワード確認' %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit action_name == 'new' ? '新規登録' : '更新', class: 'btn btn-primary mt-2' %>
+    <%= link_to '戻る', admin_path(current_user.id), class: 'btn btn-secondary mt-2' %>
+  </div>
+<% end %>

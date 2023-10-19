@@ -1,45 +1,88 @@
-<h1>管理ユーザー編集</h1>
-<br>
-<%= form_with(model: @admin, local: true) do |f| %>
-  <% if @admin.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= @admin.errors.count %>件のエラーがあります。</h2>
-      <ul>
-        <% @admin.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="container mt-4">
+  <h1 class="mb-4">管理ユーザー新規登録</h1>
+  <%= render 'admin_form' %>
+</div>
 
-  <div class="admin_name">
-    <div>
-      <%= f.label :名前 %>
-    </div>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <div>
-      <%= f.label :メールアドレス %>
-    </div>
-    <%= f.email_field :email %>
-  </div>
-  <div class="field">
-    <div>
-      <%= f.label :新パスワード %>
-    </div>
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <div>
-      <%= f.label :新パスワード確認 %>
-    </div>
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <br>
-  <div class="actions">
-    <%= f.submit "編集" %>
-  </div>
-<% end %>
+<!--<h1>管理ユーザー編集</h1>-->
+<!--<br>-->
+<%#= form_with(model: @admin, local: true) do |f| %>
+  <%# if @admin.errors.any? %>
+<!--    <div id="error_explanation">-->
+<!--      <h2><%#= @admin.errors.count %>件のエラーがあります。</h2>-->
+<!--      <ul>-->
+        <%# @admin.errors.full_messages.each do |message| %>
+<!--          <li><%#= message %></li>-->
+        <%# end %>
+<!--      </ul>-->
+<!--    </div>-->
+  <%# end %>
 
-<%= link_to '戻る', admin_path(@admin) %>
+<!--  <div class="admin_name">-->
+<!--    <div>-->
+      <%#= f.label :名前 %>
+<!--    </div>-->
+    <%#= f.text_field :name %>
+<!--  </div>-->
+<!--  <div class="field">-->
+<!--    <div>-->
+      <%#= f.label :メールアドレス %>
+<!--    </div>-->
+    <%#= f.email_field :email %>
+<!--  </div>-->
+<!--  <div class="field">-->
+<!--    <div>-->
+      <%#= f.label :新パスワード %>
+<!--    </div>-->
+    <%#= f.password_field :password %>
+<!--  </div>-->
+<!--  <div class="field">-->
+<!--    <div>-->
+      <%#= f.label :新パスワード確認 %>
+<!--    </div>-->
+    <%#= f.password_field :password_confirmation %>
+<!--  </div>-->
+<!--  <br>-->
+<!--  <div class="actions">-->
+    <%#= f.submit "編集" %>
+<!--  </div>-->
+<%# end %>
+
+<%#= link_to '戻る', admin_path(@admin) %>
+
+<!--<div class="container mt-4">-->
+<!--  <h1 class="mb-4">管理ユーザー編集</h1>-->
+  <%#= form_with(model: @admin, local: true, data: {turbo: false}) do |f| %>
+    <%# if @admin.errors.any? %>
+      <%#= javascript_importmap_tags 'admins/render' %>
+<!--      <div id="error_explanation">-->
+<!--        <h2><%#= @admin.errors.count %>件のエラーがあります。</h2>-->
+<!--        <ul>-->
+          <%# @admin.errors.full_messages.each do |message| %>
+<!--            <li><%#= message %></li>-->
+          <%# end %>
+<!--        </ul>-->
+<!--      </div>-->
+    <%# end %>
+<!--    <div class="form-group">-->
+      <%#= f.label :名前 %>
+      <%#= f.text_field :name, class: 'form-control' %>
+<!--    </div>-->
+<!--    <div class="form-group">-->
+      <%#= f.label :メールアドレス %>
+      <%#= f.email_field :email, class: 'form-control' %>
+<!--    </div>-->
+<!--    <div class="form-group">-->
+      <%#= f.label :新パスワード %>
+      <%#= f.password_field :password, class: 'form-control' %>
+<!--    </div>-->
+<!--    <div class="form-group">-->
+      <%#= f.label :新パスワード確認 %>
+      <%#= f.password_field :password_confirmation, class: 'form-control' %>
+<!--    </div>-->
+<!--    <br>-->
+<!--    <div class="form-group">-->
+      <%#= f.submit "編集", class: 'btn btn-primary mt-2' %>
+      <%#= link_to '戻る', admin_path(@admin), class: 'btn btn-secondary mt-2' %>
+<!--    </div>-->
+  <%# end %>
+<!--</div>-->
