@@ -4,6 +4,6 @@ module LoginHelper
     fill_in 'session_email', with: admin.email
     fill_in 'session_password', with: admin.password
     click_button 'Log in'
-    sleep 5
+    sleep 1
   end
 end

@@ -7,7 +7,7 @@ FactoryBot.define do
 
   factory :admin2, class: Admin do
     name { 'ドリアン海王' }
-    email { "dorian@example.com" }
+    email { 'dorian@example.com' }
     password { 'dorian'}
   end
 end

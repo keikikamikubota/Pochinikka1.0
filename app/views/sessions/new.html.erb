@@ -5,16 +5,16 @@
   <h1>Log in</h1>
   <hr>
     <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
-    <div class="centered-box">
-      <%= f.label :email %>
-      <%= f.email_field :email %>
-    </div>
-    <div class="centered-box">
-      <%= f.label :パスワード %>
-      <%= f.password_field :password %>
-        </div>
-        <div class="centered-box">
-          <%= f.submit "Log in", class: "btn btn-outline-primary" %>
-        </div>
+      <div class="centered-box">
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+      </div>
+      <div class="centered-box">
+        <%= f.label :パスワード %>
+        <%= f.password_field :password %>
+      </div>
+      <div class="centered-box">
+        <%= f.submit "Log in", class: "btn btn-outline-primary" %>
+      </div>
     <% end %>
 </div>
