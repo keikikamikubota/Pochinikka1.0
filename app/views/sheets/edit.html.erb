@@ -1,7 +1,5 @@
 <h1>インポート設定(編集)</h1>
 <br>
-<p>よくわからない場合は、インポート設定を上から順番に並べ、対応するカラム番号を選択してください。</p>
-<br>
 
 <%= form_with(model: @sheet, local: true, data: {turbo: false}) do |f| %>
   <% if @sheet.errors.any? %>
@@ -15,16 +13,16 @@
     </div>
   <% end %>
   <br>
-  <div class="field">
+  <div class="text-field-box">
     <%= f.label :title %>
-    <%= f.collection_select :sheet_id, Sheet.all, :id, :title %>
+    <%= f.text_field :title %>
   </div>
   <!--シートIDとセル範囲-->
-  <div class="field">
+  <div class="text-field-box">
     <%= f.label :spreadsheet_id, "スプレッドシートID" %>
     <%= f.text_field :spreadsheet_id %>
   </div>
-  <div class="field">
+  <div class="text-field-box">
     <%= f.label :range, "セル範囲" %>
     <%= f.text_field :range %>
   </div>

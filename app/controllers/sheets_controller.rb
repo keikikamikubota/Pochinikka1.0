@@ -14,8 +14,8 @@ class SheetsController < ApplicationController
       flash[:notice] = "シートの作成に成功しました。"
       redirect_to sheet_path(@sheet)
     else
-      flash[:notice] = "入力に不備があります。"
-      render new
+      flash[:alert] = "入力に不備があります。"
+      render :new
     end
   end
 

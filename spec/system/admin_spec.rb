@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '管理ユーザーモデル機能', type: :system do
+RSpec.describe '管理ユーザーシステム機能', type: :system do
   let!(:admin) { FactoryBot.create(:admin) }
   let!(:admin2){ FactoryBot.create(:admin2) }
 

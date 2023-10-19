@@ -33,6 +33,8 @@ class UsersController < ApplicationController
       flash[:notice] = '顧客の編集が完了しました!'
       redirect_to user_path
     else
+      # render時にJSを追加するための処理
+      @update_failed = true
       render :edit
     end
   end
