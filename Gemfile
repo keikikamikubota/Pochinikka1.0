@@ -29,13 +29,13 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'pry-rails'
   gem 'faker'
+  gem 'factory_bot_rails'
 end
 
 group :development do
   gem "web-console"
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
-  gem 'factory_bot_rails'
   gem 'launchy'
 end
 
