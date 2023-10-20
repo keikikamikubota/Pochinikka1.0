@@ -4,6 +4,7 @@ ja:
       import_detail: インポート詳細
       sheet: シート
       user: 顧客
+      admin: 管理ユーザー
     attributes:
       import_detail:
         sheet_column_number: カラム番号
@@ -24,3 +25,7 @@ ja:
         name: 顧客名
         email: メールアドレス
         phone: 電話番号
+      admin:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
