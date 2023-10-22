@@ -7,11 +7,31 @@ class ExportUsersService
     @sheet_name, @cell_range = parse_range(@range)
   end
 
+  # def session
+  # @session = GoogleDrive::Session.from_config('config.json')
+  # end
+
   def session
-  @session = GoogleDrive::Session.from_config('config.json')
+    config = {
+      'client_id' => ENV['CLIENT_ID'],
+      'client_secret' => ENV['CLIENT_SECRET'],
+      'scope' => JSON.parse(ENV['GOOGLE_SCOPE']),
+      'refresh_token' => ENV['REFRESH_TOKEN']
+    }
+    credentials = Google::Auth::UserRefreshCredentials.new(
+      client_id: config['client_id'],
+      client_secret: config['client_secret'],
+      scope: config['scope'],
+      refresh_token: config['refresh_token']
+    )
+    @session = GoogleDrive::Session.from_credentials(credentials)
   end
 
-  # ここのシート名の指定がないとエラーになる(google_driveが@sheet必要なため？)
+
+
+
+
+# ここのシート名の指定がないとエラーになる(google_driveが@sheet必要なため？)
   def sheet
     @sheet ||= session.spreadsheet_by_key(@spreadsheet_id).worksheet_by_title(@sheet_name)
   end
