@@ -7,10 +7,6 @@ class ExportUsersService
     @sheet_name, @cell_range = parse_range(@range)
   end
 
-  # def session
-  # @session = GoogleDrive::Session.from_config('config.json')
-  # end
-
   def session
     config = {
       'client_id' => ENV['CLIENT_ID'],
@@ -26,10 +22,6 @@ class ExportUsersService
     )
     @session = GoogleDrive::Session.from_credentials(credentials)
   end
-
-
-
-
 
 # ここのシート名の指定がないとエラーになる(google_driveが@sheet必要なため？)
   def sheet
