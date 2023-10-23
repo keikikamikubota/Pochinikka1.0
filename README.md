@@ -16,7 +16,7 @@ GoogleAPIとの連携でシートのインポート・エクスポートが出�
 
 ![開発前流れ](docs/15.png)
 
-まず、HPに依頼がくると、社内DBに顧客情報として保存されます。
+まずHPに依頼がくると、社内DBに顧客情報として保存されます。
 これが外注先のコールセンターにスプレッドシートとして用意され、実際の電話やりとりが行われます。
 最終的に「商談の日程調整」まで進めば、本社の担当者に連絡が届く仕組みでした。
 
@@ -39,10 +39,10 @@ GoogleAPIとの連携でシートのインポート・エクスポートが出�
 
 ## 使用技術
 
-- google_drive（3.0.7)：googleAPI機能の利用
+- google_drive（3.0.7)：GoogleAPI機能の利用
 - googleauth(0.17.1)：OAuth2.0アカウントとの連携
-- ransack(enum_help)：enum型値の日本語化に
-- typoeus(gem/リクエスト処理/Twitter API V2 による投稿取得で使用))
+- enum_help：enum型値の日本語化に
+- ransack：ページの検索機能
 
 - JavaScript： 一部URLの遷移時
 - bootstrap：全体のデザイン
