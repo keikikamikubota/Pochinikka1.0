@@ -4,6 +4,8 @@
   <%= image_tag "logo.png", class: "mb-2 login-logo" %>
   <h1>Log in</h1>
   <hr>
+  <p class="text-muted">ポチッと管理を日課に。</p>
+  <hr>
     <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
       <div class="centered-box">
         <%= f.label :email %>

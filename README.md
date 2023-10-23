@@ -57,6 +57,18 @@ GoogleAPIとの連携でシートのインポート・エクスポートが出�
 ※ 企業向けアプリのため、現在**アカウント情報がないとログインができません**。
 挙動が確認したい方は、お手数ですが開発者までご連絡ください。
 
+## 実行手順
+
+```bash
+$ git clone https://github.com/keikikamikubota/Pochinikka1.0.git
+$ bundle install
+$ yarn install
+$ cd pochinikka
+$ rails db:create && rails db:migrate　&& rails db:seed
+$ rails s
+```
+
+
 ## 要件定義一覧
 
 [要件定義（ポチニッカ）](https://docs.google.com/spreadsheets/d/15msBnQ_21w7erIOCudjj5z0yKSqy1icNbvbcsAl54J8/edit#gid=1929335711)
