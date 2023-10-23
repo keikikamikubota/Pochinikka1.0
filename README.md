@@ -63,7 +63,7 @@ GoogleAPIとの連携でシートのインポート・エクスポートが出�
 
 ## ER 図
 
-![ER図](docs/er.png)
+![ER図](docs/ER.png)
 
 ## 画面遷移図
 
