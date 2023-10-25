@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-4">
       <%= f.label :name_or_email_or_phone_or_note_or_admin_note_cont, 'キーワード' %>
-      <%= f.search_field :name_or_email_or_phone_or_note_or_admin_note_cont, class: 'form-control' %>
+      <%= f.search_field :name_or_email_or_phone_or_note_or_admin_note_cont, class: 'form-control', placeholder: "名前、メールアドレスなど" %>
     </div>
     <div class="col-md-4 status-field">
       <%= f.label :status_id_eq, 'ステータス' %>
@@ -30,8 +30,8 @@
   </div>
   <div class="d-flex">
     <%= form_with url: export_to_google_sheets_users_path, method: :post, local: true, class: 'd-flex' do |form| %>
-      <%= form.text_field :spreadsheet_id, placeholder: "Spreadsheet ID", class: 'form-control me-2' %>
-      <%= form.text_field :range, placeholder: "Range", class: 'form-control me-2' %>
+      <%= form.text_field :spreadsheet_id, placeholder: "シート URL", class: 'form-control me-2' %>
+      <%= form.text_field :range, placeholder: "シート名!セル範囲", class: 'form-control me-2' %>
       <%= form.submit "エクスポート", data: { turbo_confirm: "エクスポートを実行してよろしいですか？" }, class: 'btn btn-warning' %>
     <% end %>
   </div>

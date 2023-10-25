@@ -1,4 +1,5 @@
 require 'google_drive'
+
 #spreadsheetsクラスを作成し、内部でAPIとの認証を突破する。
 class Google::Spreadsheets
   def initialize
