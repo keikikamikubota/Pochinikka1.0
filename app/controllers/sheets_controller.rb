@@ -47,7 +47,8 @@ class SheetsController < ApplicationController
 
   def import_exec
     @sheet = Sheet.find(params[:id])
-    spreadsheet_id = @sheet.spreadsheet_id
+    spreadsheet_url = @sheet.spreadsheet_id
+    spreadsheet_id = extract_spreadsheet_id(spreadsheet_url)
     range = @sheet.range
     import_users_service = ImportUsersService.new(@sheet, spreadsheet_id, range)
     if import_users_service.call
@@ -90,6 +91,12 @@ class SheetsController < ApplicationController
   def build_default_details
     @sheet.import_details.destroy_all if @sheet.import_details.present?
     10.times { @sheet.import_details.build}
+  end
+
+  # シートのURLからIDを抽出するメソッド
+  def extract_spreadsheet_id(url)
+    match = url.match(/\/d\/([a-zA-Z0-9-_]+)/)
+    match ? match[1] : nil
   end
 
   def sheet_params

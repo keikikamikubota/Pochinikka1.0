@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>シート名</th>
-      <th>シートID</th>
+      <th>シートURL</th>
       <th>シートセル範囲</th>
       <th>作成日</th>
       <th>操作</th>
@@ -16,10 +16,12 @@
       <tr>
         <td><%= sheet.title %></td>
         <td>
-          <% if sheet.spreadsheet_id.length > 9 %>
-            <%= sheet.spreadsheet_id[0..4] + "..." + sheet.spreadsheet_id[-5..-1] %>
-          <% else %>
-            <%= sheet.spreadsheet_id %>
+          <%= link_to sheet.spreadsheet_id, target: '_blank' do %>
+            <% if sheet.spreadsheet_id.length > 9 %>
+              <%= sheet.spreadsheet_id[0..4] + "..." + sheet.spreadsheet_id[-5..-1] %>
+            <% else %>
+              <%= sheet.spreadsheet_id %>
+            <% end %>
           <% end %>
         </td>
         <td><%= sheet.range %></td>
