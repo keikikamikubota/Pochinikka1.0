@@ -47,8 +47,14 @@ class UsersController < ApplicationController
 
   # エクスポートを実行するメソッド
   def export_to_google_sheets
-    spreadsheet_id = params[:spreadsheet_id]
+    spreadsheet_url = params[:spreadsheet_id]
+    spreadsheet_id = extract_spreadsheet_id(spreadsheet_url)
     range = params[:range]
+    if spreadsheet_id.nil?
+      flash[:alert] = '無効なスプレッドシートURLです。'
+      redirect_to users_path
+      return
+    end
     if ExportUsersService.new(spreadsheet_id, range).call
       flash[:notice] = 'エクスポートが完了しました!'
     else
@@ -64,6 +70,12 @@ class UsersController < ApplicationController
     @q = User.ransack(params[:q])
     @users = @q.result(distinct: true)
     @result = params[:q]&.values&.reject(&:blank?)
+  end
+
+  # シートのURLからIDを抽出するメソッド
+  def extract_spreadsheet_id(url)
+    match = url.match(/\/d\/([a-zA-Z0-9-_]+)/)
+    match ? match[1] : nil
   end
 
   def user_params

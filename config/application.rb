@@ -1,7 +1,6 @@
 require_relative "boot"
-# config/application.rb
-require_relative 'export_setting'
 
+# require_relative 'export_setting'
 
 require "rails/all"
 

@@ -8,17 +8,13 @@ class ExportUsersService
   end
 
   def session
-    config = {
-      'client_id' => ENV['CLIENT_ID'],
-      'client_secret' => ENV['CLIENT_SECRET'],
-      'scope' => JSON.parse(ENV['GOOGLE_SCOPE']),
-      'refresh_token' => ENV['REFRESH_TOKEN']
-    }
+
     credentials = Google::Auth::UserRefreshCredentials.new(
-      client_id: config['client_id'],
-      client_secret: config['client_secret'],
-      scope: config['scope'],
-      refresh_token: config['refresh_token']
+      client_id: ENV['CLIENT_ID'],
+      client_secret: ENV['CLIENT_SECRET'],
+      # scope: JSON.parse(ENV['GOOGLE_SCOPE']),
+      scope: ENV['GOOGLE_SCOPE'].split(','),
+      refresh_token: ENV['REFRESH_TOKEN']
     )
     @session = GoogleDrive::Session.from_credentials(credentials)
   end
